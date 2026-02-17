@@ -11,9 +11,9 @@ namespace AppFinancialControl.Service
     {
         private readonly LiteDatabase _db;
         private readonly string _collectionName = "Transactions";
-        public TransactionService()
+        public TransactionService(LiteDatabase databae)
         {
-            _db = new LiteDatabase(";Connection=Shared");
+            _db = databae;
         }
 
         #region GetAll
