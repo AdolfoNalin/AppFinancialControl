@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using AppFinancialControl.View;
 
 namespace AppFinancialControl
 {
@@ -11,7 +12,7 @@ namespace AppFinancialControl
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            return new Window(new TransactionList());
         }
     }
 }

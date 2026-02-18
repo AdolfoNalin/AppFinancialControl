@@ -103,4 +103,16 @@
 	  <None Include="D:\Users\repos\AppControleFinanceiro\AppFinancialControl\AppFinancialControl\.editorconfig" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="View\TransactionAdd.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\TransactionList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\TrasactionEdit.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
