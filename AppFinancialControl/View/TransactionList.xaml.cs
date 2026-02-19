@@ -6,4 +6,17 @@ public partial class TransactionList : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void OpenScreen(object sender, EventArgs e)
+    {
+        try
+        {
+            App.Current.MainPage = new TransactionAdd();
+        }
+        catch (Exception ex)
+        {
+            
+            throw;
+        }
+    }
 }

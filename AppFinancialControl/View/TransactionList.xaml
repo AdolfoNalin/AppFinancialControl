@@ -8,5 +8,11 @@
             Text="TransactionList"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+        <Button
+            Text="+"
+            VerticalOptions="Center"
+            Clicked="OpenScreen"
+            />
     </VerticalStackLayout>
 </ContentPage>
