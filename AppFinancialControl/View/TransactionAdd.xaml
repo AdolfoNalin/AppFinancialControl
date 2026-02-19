@@ -4,9 +4,33 @@
              x:Class="AppFinancialControl.View.TransactionAdd"
              Title="TransactionAdd">
     <VerticalStackLayout>
-        <Label 
-            Text="TransactionAdd"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <Border 
+            BackgroundColor="Black"
+            Stroke="Transparent"
+            Margin="15"
+            Padding="15"
+            StrokeShape="RoundRectangle 25">
+
+            <Grid 
+                RowDefinitions="Auto"
+                ColumnDefinitions="*, 30">
+
+                <Label
+                    Text="Novo"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    />
+
+                <Label
+                    Text="X"
+                    HorizontalOptions="Center"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    />
+            </Grid>
+        </Border>
     </VerticalStackLayout>
 </ContentPage>
