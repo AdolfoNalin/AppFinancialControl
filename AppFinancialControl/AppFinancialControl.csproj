@@ -104,13 +104,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\TransactionEdit.xaml.cs">
+	    <DependentUpon>TransactionEdit.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="View\TransactionAdd.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\TransactionList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\TrasactionEdit.xaml">
+	  <MauiXaml Update="View\TransactionEdit.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

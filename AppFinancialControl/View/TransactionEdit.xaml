@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppFinancialControl.View.TransactionEdit"
+             Title="TransactionEdit">
+    <VerticalStackLayout 
+     Spacing="10">
+
+        <Border 
+         BackgroundColor="Black"
+         Stroke="Transparent"
+         Margin="15"
+         Padding="15"
+         StrokeShape="RoundRectangle 25">
+
+            <Grid 
+             RowDefinitions="Auto"
+             ColumnDefinitions="*, 30">
+
+                <Label
+                 Text="Atualizar"
+                 VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 Grid.Row="0"
+                 Grid.Column="0"
+                 />
+
+                <Label
+                 Text="X"
+                 HorizontalOptions="Center"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 />
+            </Grid>
+        </Border>
+
+        <Grid ColumnDefinitions="*,*"
+           Margin="30,10">
+            <RadioButton
+             HorizontalOptions="Start"
+             Grid.Row="0"
+             Grid.Column="0"
+             IsChecked="True"
+             Content="Receita"
+             FontSize="Caption"/>
+
+            <RadioButton
+             HorizontalOptions="End"
+             Grid.Row="0"
+             Grid.Column="2"
+             IsChecked="False"
+             Content="Despesa"
+             FontSize="Caption"/>
+        </Grid>
+
+        <Entry 
+         Placeholder="Nome"
+         Margin="15.0"/>
+
+        <DatePicker
+         Margin="15.0"/>
+
+        <Entry
+         Margin="15.0"
+         Placeholder="Valor"/>
+
+        <Button
+         Text="Salvar"
+         Margin="15"
+         BackgroundColor="BlueViolet"
+         HorizontalOptions="Center"/>
+
+    </VerticalStackLayout>
+</ContentPage>
