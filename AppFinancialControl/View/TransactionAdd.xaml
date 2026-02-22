@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppFinancialControl.View.TransactionAdd"
              Title="TransactionAdd">
-    <VerticalStackLayout>
+    <VerticalStackLayout 
+        Spacing="10">
 
         <Border 
             BackgroundColor="Black"
@@ -32,5 +33,42 @@
                     />
             </Grid>
         </Border>
+
+        <Grid ColumnDefinitions="*,*"
+              Margin="30,10">
+            <RadioButton
+                HorizontalOptions="Start"
+                Grid.Row="0"
+                Grid.Column="0"
+                IsChecked="True"
+                Content="Receita"
+                FontSize="Caption"/>
+
+            <RadioButton
+                HorizontalOptions="End"
+                Grid.Row="0"
+                Grid.Column="2"
+                IsChecked="False"
+                Content="Despesa"
+                FontSize="Caption"/>
+        </Grid>
+
+        <Entry 
+            Placeholder="Nome"
+            Margin="15.0"/>
+
+        <DatePicker
+            Margin="15.0"/>
+
+        <Entry
+            Margin="15.0"
+            Placeholder="Valor"/>
+
+        <Button
+            Text="Salvar"
+            Margin="15"
+            BackgroundColor="BlueViolet"
+            HorizontalOptions="Center"/>
+
     </VerticalStackLayout>
 </ContentPage>
