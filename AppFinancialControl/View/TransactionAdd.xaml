@@ -34,8 +34,10 @@
             </Grid>
         </Border>
 
-        <Grid ColumnDefinitions="*,*"
-              Margin="30,10">
+        <Grid 
+            ColumnDefinitions="*,*"
+             Margin="30,10">
+            
             <RadioButton
                 HorizontalOptions="Start"
                 Grid.Row="0"
@@ -67,8 +69,10 @@
         <Button
             Text="Salvar"
             Margin="15"
-            BackgroundColor="BlueViolet"
-            HorizontalOptions="Center"/>
+            HorizontalOptions="Center"
+            BackgroundColor="GreenYellow"
+            FontAttributes="Bold"
+            />
 
     </VerticalStackLayout>
 </ContentPage>

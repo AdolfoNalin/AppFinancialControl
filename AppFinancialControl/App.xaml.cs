@@ -12,7 +12,7 @@ namespace AppFinancialControl
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new TransactionAdd());
+            return new Window(new TransactionEdit());
         }
     }
 }
