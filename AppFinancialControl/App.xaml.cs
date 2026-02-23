@@ -8,11 +8,8 @@ namespace AppFinancialControl
         public App()
         {
             InitializeComponent();
-        }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new TransactionEdit());
+            MainPage = new NavigationPage(new TransactionList());
         }
     }
 }

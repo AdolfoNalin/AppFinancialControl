@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppFinancialControl.View.TransactionList"
-             Title="TransactionList">
+             Title="Listagem ">
     <VerticalStackLayout>
         <Label 
             Text="TransactionList"
@@ -12,7 +12,14 @@
         <Button
             Text="+"
             VerticalOptions="Center"
-            Clicked="OpenScreen"
+            Clicked="OpenScreenAdd"
             />
+
+        <Button
+        Text="Edit"
+        VerticalOptions="Center"
+        Clicked="OpenScreenEdit"
+        />
+        
     </VerticalStackLayout>
 </ContentPage>
