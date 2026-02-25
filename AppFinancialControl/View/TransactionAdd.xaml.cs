@@ -6,4 +6,19 @@ public partial class TransactionAdd : ContentPage
 	{
         InitializeComponent();
     }
+
+    #region TapGestureRecognizer_Tapped
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            Navigation.PopModalAsync();
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+    #endregion
 }
