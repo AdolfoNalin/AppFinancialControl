@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace AppFinancialControl.View;
 
 public partial class TransactionAdd : ContentPage

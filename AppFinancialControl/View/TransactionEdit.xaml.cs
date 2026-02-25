@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace AppFinancialControl.View;
 
 public partial class TransactionEdit : ContentPage
@@ -8,7 +10,7 @@ public partial class TransactionEdit : ContentPage
 	}
 
     #region TapGestureRecognizer_Tapped
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         try
         {
@@ -16,7 +18,7 @@ public partial class TransactionEdit : ContentPage
         }
         catch (Exception ex)
         {
-            DisplayAlert("Erro", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "OK");
+            await DisplayAlert("Erro", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "OK");
         }
     }
     #endregion

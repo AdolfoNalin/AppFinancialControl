@@ -2,24 +2,44 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppFinancialControl.View.TransactionList"
-             Title="Listagem ">
+             Title="Listagem "
+             NavigationPage.HasNavigationBar="False">
     <VerticalStackLayout>
-        <Label 
-            Text="TransactionList"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
 
+        <Grid 
+            Padding="15"
+            ColumnDefinitions="50, *, Auto">
+            <Label 
+                Text="S"
+                Margin="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="15"/>
+            
+            <VerticalStackLayout Grid.Column="1">
+                <Label
+                    Text="Salário"/>
+                <Label 
+                    Text="10/10/2022"/>
+            </VerticalStackLayout>
+            <Label 
+                VerticalOptions="Center"
+                Grid.Column="2"
+                Text="R$3.600,00"/>
+        </Grid>
+        
         <Button
             Text="+"
             VerticalOptions="Center"
+            HorizontalOptions="Center"
             Clicked="OpenScreenAdd"
             />
 
         <Button
-        Text="Edit"
-        VerticalOptions="Center"
-        Clicked="OpenScreenEdit"
-        />
+            Text="Edit"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Clicked="OpenScreenEdit"/>
         
     </VerticalStackLayout>
 </ContentPage>
