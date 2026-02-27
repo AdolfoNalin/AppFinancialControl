@@ -30,7 +30,7 @@
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="TextTransform" Value="Uppercase"/>
         <Setter Property="BorderWidth" Value="0"/>
-        <Setter Property="CornerRadius" Value="22"/>
+        <Setter Property="CornerRadius" Value="20"/>
         <Setter Property="Padding" Value="30,10"/>
         <Setter Property="MinimumHeightRequest" Value="22"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
