@@ -1,3 +1,5 @@
+using AppFinancialControl.Models;
+using AppFinancialControl.Service;
 using System.Threading.Tasks;
 
 namespace AppFinancialControl.View;
@@ -20,6 +22,37 @@ public partial class TransactionAdd : ContentPage
         {
 
             throw;
+        }
+    }
+    #endregion
+
+    #region ButtonClicked
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            Transaction transaction = new Transaction()
+            {
+                Name = EntryName.Text ?? throw new ArgumentNullException("Nome é um campo necessário"),
+                Date = DPDate.Date ?? throw new ArgumentNullException("Data é um campo necessário"),
+                Value = float.Parse(EntryValue.Text ?? throw new ArgumentNullException("Valor é um campo necessário")),
+                Type = rbEntry.IsChecked == true ? TransactionType.Income : TransactionType.Expenses,
+            };
+
+            var repository = this.Handler.MauiContext.Services.GetService<ITransactionService>();
+            repository.Add(transaction);
+
+            DisplayAlert("Aceito", "Transição salva", "ok");
+
+            Navigation.PopModalAsync();
+        }
+        catch(ArgumentNullException ane)
+        {
+            DisplayAlert("Error", ane.ParamName, "Ok");
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Erro", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "OK");;
         }
     }
     #endregion

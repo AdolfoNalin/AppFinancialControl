@@ -43,6 +43,7 @@
              Margin="30,10">
             
             <RadioButton
+                x:Name="rbEntry"
                 HorizontalOptions="Start"
                 Grid.Row="0"
                 Grid.Column="0"
@@ -51,6 +52,7 @@
                 FontSize="Caption"/>
 
             <RadioButton
+                x:Name="rbExit"
                 HorizontalOptions="End"
                 Grid.Row="0"
                 Grid.Column="2"
@@ -60,23 +62,26 @@
         </Grid>
 
         <Entry 
+            x:Name="EntryName"
             Placeholder="Nome"
             Margin="15.0"/>
 
         <DatePicker
+            x:Name="DPDate"
             Margin="15.0"/>
 
-        <Entry
+        <Entry x:Name="EntryValue"
             Margin="15.0"
             Placeholder="Valor"/>
 
         <Button
+            x:Name="Save"
             Text="Salvar"
             Margin="15"
             HorizontalOptions="Center"
             BackgroundColor="GreenYellow"
             FontAttributes="Bold"
-            />
+            Clicked="Button_Clicked"/>
 
     </VerticalStackLayout>
 </ContentPage>
