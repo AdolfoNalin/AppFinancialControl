@@ -1,4 +1,5 @@
 ﻿using AppFinancialControl.Service;
+using AppFinancialControl.View;
 using LiteDB;
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +16,8 @@ namespace AppFinancialControl
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .RegisterDatabaseAndRepository();
 
             #if DEBUG
     		builder.Logging.AddDebug();
@@ -25,14 +27,15 @@ namespace AppFinancialControl
         }
 
         #region RegisterDatabaseAndRepository
-        public static MauiAppBuilder RegisterDatabaseAndRepository(MauiAppBuilder mauiAppBuilder)
+        public static MauiAppBuilder RegisterDatabaseAndRepository(this MauiAppBuilder mauiAppBuilder)
         {
             try
             {
                 mauiAppBuilder.Services.AddSingleton<LiteDatabase>(
                     options =>
-                    new LiteDatabase($"{AppSettings.DataBasePath};Connection=shared")
-                    );
+                        {
+                            return new LiteDatabase($"Filename={AppSettings.DataBasePath};Connection=shared");
+                        });
 
                 mauiAppBuilder.Services.AddTransient<ITransactionService, TransactionService>();
 
