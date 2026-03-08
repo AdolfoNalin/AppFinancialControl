@@ -6,9 +6,12 @@ namespace AppFinancialControl.View;
 
 public partial class TransactionAdd : ContentPage
 {
-	public TransactionAdd()
+    private ITransactionService _service;
+
+	public TransactionAdd(ITransactionService service)
 	{
         InitializeComponent();
+        _service = service;
     }
 
     #region TapGestureRecognizer_Tapped
@@ -40,8 +43,7 @@ public partial class TransactionAdd : ContentPage
                 Type = rbEntry.IsChecked == true ? TransactionType.Income : TransactionType.Expenses,
             };
 
-            var repository = this.Handler.MauiContext.Services.GetService<ITransactionService>();
-            repository.Add(transaction);
+            _service.Add(transaction);
 
             DisplayAlert("Aceito", "Transição salva", "ok");
 
