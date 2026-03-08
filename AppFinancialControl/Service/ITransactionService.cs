@@ -6,7 +6,7 @@ using AppFinancialControl.Models;
 
 namespace AppFinancialControl.Service
 {
-    interface ITransactionService
+    public interface ITransactionService
     {
         public List<Transaction> GetAll();
         public void Add(Transaction transaction);
