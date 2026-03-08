@@ -6,13 +6,10 @@ namespace AppFinancialControl.View;
 
 public partial class TransactionList : ContentPage
 {
-    private TransactionAdd _add;
-    private TransactionEdit _edit;
     private ITransactionService _service;
-	public TransactionList(TransactionAdd add, TransactionEdit edit, ITransactionService service)
+
+	public TransactionList(ITransactionService service)
 	{
-        _add = add;
-        _edit = edit;
         _service = service;
 
 		InitializeComponent();
@@ -48,7 +45,10 @@ public partial class TransactionList : ContentPage
     {
         try
         {
-            Navigation.PushModalAsync(_add);
+            TransactionAdd add =  this.Handler.MauiContext.Services.GetService<TransactionAdd>()
+                ?? throw new ArgumentNullException("MauiContext is null");
+
+            Navigation.PushModalAsync(add);
         }
         catch (Exception ex)
         {
@@ -62,7 +62,9 @@ public partial class TransactionList : ContentPage
     {
         try
         {
-            Navigation.PushModalAsync(_edit);
+            TransactionEdit edit = this.Handler.MauiContext.Services.GetService<TransactionEdit>()
+                ?? throw new ArgumentNullException("Maiu is null");
+            Navigation.PushModalAsync(edit);
         }
         catch (Exception ex)
         {
