@@ -9,7 +9,6 @@ public partial class TransactionList : ContentPage
     private TransactionAdd _add;
     private TransactionEdit _edit;
     private ITransactionService _service;
-
 	public TransactionList(TransactionAdd add, TransactionEdit edit, ITransactionService service)
 	{
         _add = add;
@@ -17,15 +16,17 @@ public partial class TransactionList : ContentPage
         _service = service;
 
 		InitializeComponent();
+       
         cvTransaction.ItemsSource = UpdateData();
-	}
+    }
 
     #region UpdateData
     private List<Transaction> UpdateData()
     {
         try
         {
-            List<Transaction> list = _service.GetAll();
+            List<Transaction> list = _service.GetAll() ?? 
+                throw new ArgumentNullException("Nenhuma Despesa ou Saldo cadastrado");
 
             return list;
         }

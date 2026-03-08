@@ -22,14 +22,15 @@
 
                           <VerticalStackLayout Grid.Column="1">
                             <Label
-                             Text="Salário"/>
+                               Text="{Binding Name}"/>
                             <Label 
-                             Text="10/10/2022"/>
-                          </VerticalStackLayout>
-                                    <Label 
-                         VerticalOptions="Center"
-                         Grid.Column="2"
-                         Text="R$3.600,00"/>    
+                                Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
+
+                        </VerticalStackLayout>
+                        <Label 
+                            Text="{Binding Value, StringFormat='{0:C}'}"
+                            VerticalOptions="Center"
+                            Grid.Column="2"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -59,7 +60,6 @@
                     FontSize="18"/>
 
                 <Label 
-                    x:Name="Salary"
                     Text="R$2760,00"
                     Grid.Row="1"
                     FontSize="36"/>
@@ -83,7 +83,6 @@
                     FontSize="10"/>
 
                 <Label 
-                    x:Name="Icome"
                     Text="R$3000,00"
                     Grid.Row="4"/>
 
@@ -95,7 +94,6 @@
                     FontSize="10"/>
 
                 <Label 
-                    x:Name="Expenses"
                     Text="R$840,00"
                     Grid.Column="1"
                     Grid.Row="4"/>
