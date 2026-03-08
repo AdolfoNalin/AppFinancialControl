@@ -17,7 +17,8 @@ namespace AppFinancialControl
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 })
-                .RegisterDatabaseAndRepository();
+                .RegisterDatabaseAndRepository()
+                .RegisterViews();
 
             #if DEBUG
     		builder.Logging.AddDebug();
@@ -38,6 +39,25 @@ namespace AppFinancialControl
                         });
 
                 mauiAppBuilder.Services.AddTransient<ITransactionService, TransactionService>();
+
+                return mauiAppBuilder;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region RegisterViews
+        public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
+        {
+            try
+            {
+                mauiAppBuilder.Services.AddTransient<TransactionAdd>();
+                mauiAppBuilder.Services.AddTransient<TransactionList>();
+                mauiAppBuilder.Services.AddTransient<TransactionEdit>();
 
                 return mauiAppBuilder;
             }
