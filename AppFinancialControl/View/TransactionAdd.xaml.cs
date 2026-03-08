@@ -1,5 +1,6 @@
 using AppFinancialControl.Models;
 using AppFinancialControl.Service;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Threading.Tasks;
 
 namespace AppFinancialControl.View;
@@ -48,6 +49,7 @@ public partial class TransactionAdd : ContentPage
             DisplayAlert("Aceito", "Transição salva", "ok");
 
             Navigation.PopModalAsync();
+            WeakReferenceMessenger.Default.Send<String>("");
         }
         catch(FormatException fe)
         {

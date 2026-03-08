@@ -1,5 +1,6 @@
 using AppFinancialControl.Models;
 using AppFinancialControl.Service;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Threading.Tasks;
 
 namespace AppFinancialControl.View;
@@ -14,28 +15,30 @@ public partial class TransactionList : ContentPage
 
 		InitializeComponent();
        
-        cvTransaction.ItemsSource = UpdateData();
+        UpdateData();
+        WeakReferenceMessenger.Default.Register<String>(this, (e, message) =>
+        {
+            UpdateData();
+        });
     }
 
     #region UpdateData
-    private List<Transaction> UpdateData()
+    private void UpdateData()
     {
         try
         {
             List<Transaction> list = _service.GetAll() ?? 
                 throw new ArgumentNullException("Nenhuma Despesa ou Saldo cadastrado");
 
-            return list;
+            cvTransaction.ItemsSource = list;
         }
         catch(ArgumentNullException ane)
         {
             DisplayAlert("Error", $"{ane.Message}", "Ok");
-            return null;
         }
         catch (Exception ex)
         {
             DisplayAlert("Error", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "Ok");
-            return null;
         }
     }
     #endregion
@@ -45,6 +48,7 @@ public partial class TransactionList : ContentPage
     {
         try
         {
+            
             TransactionAdd add =  this.Handler.MauiContext.Services.GetService<TransactionAdd>()
                 ?? throw new ArgumentNullException("MauiContext is null");
 
