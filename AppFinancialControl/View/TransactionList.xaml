@@ -6,27 +6,35 @@
              NavigationPage.HasNavigationBar="False">
     <VerticalStackLayout>
 
-        <Grid 
-            Padding="15"
-            ColumnDefinitions="50, *, Auto">
-            <Label 
-                Text="S"
-                Margin="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                FontSize="15"/>
+        <CollectionView
+            x:Name="cvTransaction">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid 
+                     Padding="15"
+                     ColumnDefinitions="50, *, Auto">
+                                        <Label 
+                         Text="S"
+                         Margin="10"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         FontSize="15"/>
 
-            <VerticalStackLayout Grid.Column="1">
-                <Label
-                    Text="Salário"/>
-                <Label 
-                    Text="10/10/2022"/>
-            </VerticalStackLayout>
-            <Label 
-                VerticalOptions="Center"
-                Grid.Column="2"
-                Text="R$3.600,00"/>
-        </Grid>
+                          <VerticalStackLayout Grid.Column="1">
+                            <Label
+                             Text="Salário"/>
+                            <Label 
+                             Text="10/10/2022"/>
+                          </VerticalStackLayout>
+                                    <Label 
+                         VerticalOptions="Center"
+                         Grid.Column="2"
+                         Text="R$3.600,00"/>    
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
 
         <Button
             Text="Edit"
@@ -36,7 +44,7 @@
 
         <Border
             Margin="10"
-            BackgroundColor="{StaticResource Black}"
+            BackgroundColor="Black"
             Stroke="Transparent"
             Padding="15"
             StrokeShape="30">
@@ -51,6 +59,7 @@
                     FontSize="18"/>
 
                 <Label 
+                    x:Name="Salary"
                     Text="R$2760,00"
                     Grid.Row="1"
                     FontSize="36"/>
@@ -74,6 +83,7 @@
                     FontSize="10"/>
 
                 <Label 
+                    x:Name="Icome"
                     Text="R$3000,00"
                     Grid.Row="4"/>
 
@@ -85,6 +95,7 @@
                     FontSize="10"/>
 
                 <Label 
+                    x:Name="Expenses"
                     Text="R$840,00"
                     Grid.Column="1"
                     Grid.Row="4"/>
