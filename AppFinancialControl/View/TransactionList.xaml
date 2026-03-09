@@ -60,7 +60,7 @@
                     FontSize="18"/>
 
                 <Label 
-                    Text="R$2760,00"
+                    x:Name="lblBalance"
                     Grid.Row="1"
                     FontSize="36"/>
 
@@ -83,7 +83,7 @@
                     FontSize="10"/>
 
                 <Label 
-                    Text="R$3000,00"
+                    x:Name="lblIncome"
                     Grid.Row="4"/>
 
                 <Label
@@ -94,7 +94,7 @@
                     FontSize="10"/>
 
                 <Label 
-                    Text="R$840,00"
+                    x:Name="lblExpense"
                     Grid.Column="1"
                     Grid.Row="4"/>
             </Grid>

@@ -30,6 +30,18 @@ public partial class TransactionList : ContentPage
             List<Transaction> list = _service.GetAll() ?? 
                 throw new ArgumentNullException("Nenhuma Despesa ou Saldo cadastrado");
 
+            float income = list.Where(b => b.Type == TransactionType.Income)
+                .Sum(a => a.Value);
+
+            float expensse = list.Where(b => b.Type == TransactionType.Expenses)
+               .Sum(a => a.Value);
+
+            float balance = income - expensse;
+
+            lblBalance.Text = balance.ToString("C");
+            lblIncome.Text = income.ToString("C");
+            lblExpense.Text = expensse.ToString("C");
+
             cvTransaction.ItemsSource = list;
         }
         catch(ArgumentNullException ane)
