@@ -78,8 +78,15 @@ public partial class TransactionList : ContentPage
     {
         try
         {
+            var grid = (Grid)sender;
+            var gestre = (TapGestureRecognizer) grid.GestureRecognizers[0];
+            Transaction transaction = (Transaction) gestre.CommandParameter ?? throw new ArgumentNullException("Trasação na identificada!");
+
             TransactionEdit edit = this.Handler.MauiContext.Services.GetService<TransactionEdit>()
                 ?? throw new ArgumentNullException("Maiu is null");
+
+            edit.SetTransactionToEdit(transaction);
+
             Navigation.PushModalAsync(edit);
         }
         catch (Exception ex)

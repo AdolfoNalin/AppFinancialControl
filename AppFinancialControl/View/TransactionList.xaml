@@ -13,14 +13,21 @@
                     <Grid 
                      Padding="15"
                      ColumnDefinitions="50, *, Auto">
-                                        <Label 
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                CommandParameter="{Binding .}"
+                                Tapped="OpenScreenEdit">
+
+                            </TapGestureRecognizer>
+                        </Grid.GestureRecognizers>
+                        <Label 
                          Text="S"
                          Margin="10"
                          HorizontalOptions="Center"
                          VerticalOptions="Center"
                          FontSize="15"/>
 
-                          <VerticalStackLayout Grid.Column="1">
+                        <VerticalStackLayout Grid.Column="1">
                             <Label
                                Text="{Binding Name}"/>
                             <Label 
@@ -36,12 +43,6 @@
             </CollectionView.ItemTemplate>
 
         </CollectionView>
-
-        <Button
-            Text="Edit"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            Clicked="OpenScreenEdit"/>
 
         <Border
             Margin="10"
