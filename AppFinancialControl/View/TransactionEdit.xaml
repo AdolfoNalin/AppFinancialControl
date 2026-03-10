@@ -79,7 +79,8 @@
             x:Name="btnSave"
             Text="Salvar"
             Margin="15"
-            HorizontalOptions="Center"/>
+            HorizontalOptions="Center"
+            Clicked="SaveEdit" />
 
     </VerticalStackLayout>
 </ContentPage>
