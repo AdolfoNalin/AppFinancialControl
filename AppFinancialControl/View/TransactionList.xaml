@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:AppFinancialControl.Libraries.Converters"
              x:Class="AppFinancialControl.View.TransactionList"
              Title="Listagem "
              NavigationPage.HasNavigationBar="False">
-    <VerticalStackLayout>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:TransactionValueColorConvert x:Key="TransactionValueColorConvert"/>
+            <converters:TransactionValueConverter x:Key="TransactionValueConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <VerticalStackLayout>
         <CollectionView
             x:Name="cvTransaction">
             <CollectionView.ItemTemplate>
@@ -35,7 +43,8 @@
 
                         </VerticalStackLayout>
                         <Label 
-                            Text="{Binding Value, StringFormat='{0:C}'}"
+                            Text="{Binding ., Converter={StaticResource TransactionValueConverter}}"
+                            TextColor="{Binding ., Converter={StaticResource TransactionValueColorConvert}}"
                             VerticalOptions="Center"
                             Grid.Column="2"/>
                     </Grid>
