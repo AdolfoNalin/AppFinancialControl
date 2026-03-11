@@ -28,12 +28,27 @@
 
                             </TapGestureRecognizer>
                         </Grid.GestureRecognizers>
-                        <Label 
-                         Text="S"
-                         Margin="10"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Center"
-                         FontSize="15"/>
+                        
+                        <Border 
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            StrokeShape="RoundRectangle 20"
+                            Stroke="Transparent">
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Tapped="Delete_Tapped"
+                                    CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </Border.GestureRecognizers>
+                            
+                            <Label 
+                                Text="S"
+                                Margin="10"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                FontSize="15"/>        
+                        </Border>
 
                         <VerticalStackLayout Grid.Column="1">
                             <Label

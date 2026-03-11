@@ -95,4 +95,25 @@ public partial class TransactionList : ContentPage
         }
     }
     #endregion
+
+    #region Delete_Tapped
+    private async void Delete_Tapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            bool result = await DisplayAlert("Deletar", "Tem certeza que deseja excluir", "Sim", "Não");
+
+            if(result)
+            {
+                Transaction transaction =  e.Parameter as Transaction;
+                _service.Delete(transaction);
+                UpdateData();
+            }
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Error", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "OK");
+        }
+    }
+    #endregion
 }
