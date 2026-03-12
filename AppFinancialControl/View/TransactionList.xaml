@@ -10,6 +10,7 @@
         <ResourceDictionary>
             <converters:TransactionValueColorConvert x:Key="TransactionValueColorConvert"/>
             <converters:TransactionValueConverter x:Key="TransactionValueConverter"/>
+            <converters:TransactionNameConverter x:Key="TransactionNameConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -23,7 +24,7 @@
                      ColumnDefinitions="50, *, Auto">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer 
-                                CommandParameter="{Binding .}"
+                                CommandParameter="{Binding ., Converter={StaticResource TransactionNameConverter}}"
                                 Tapped="OpenScreenEdit">
 
                             </TapGestureRecognizer>
@@ -32,8 +33,7 @@
                         <Border 
                             WidthRequest="40"
                             HeightRequest="40"
-                            StrokeShape="RoundRectangle 20"
-                            Stroke="Transparent">
+                            StrokeShape="RoundRectangle 20">
 
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer 
@@ -43,7 +43,7 @@
                             </Border.GestureRecognizers>
                             
                             <Label 
-                                Text="S"
+                                Text="{Binding Name, Converter={StaticResource TransactionNameConverter}}"
                                 Margin="10"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"
