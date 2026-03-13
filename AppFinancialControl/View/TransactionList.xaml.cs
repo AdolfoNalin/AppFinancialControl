@@ -1,6 +1,7 @@
 using AppFinancialControl.Models;
 using AppFinancialControl.Service;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Platform;
 using System.Threading.Tasks;
 
 namespace AppFinancialControl.View;
@@ -8,8 +9,10 @@ namespace AppFinancialControl.View;
 public partial class TransactionList : ContentPage
 {
     private ITransactionService _service;
+    private char _caracterPrimari;
+    private Color _originalBackgroundColor;
 
-	public TransactionList(ITransactionService service)
+    public TransactionList(ITransactionService service)
 	{
         _service = service;
 
@@ -101,14 +104,58 @@ public partial class TransactionList : ContentPage
     {
         try
         {
+            AnimationBorder((Border)sender, true);
             bool result = await DisplayAlert("Deletar", "Tem certeza que deseja excluir", "Sim", "Não");
 
-            if(result)
+            if (result)
             {
-                Transaction transaction =  e.Parameter as Transaction;
+                Transaction transaction = e.Parameter as Transaction;
                 _service.Delete(transaction);
                 UpdateData();
             }
+            else
+            {
+                AnimationBorder((Border)sender, false);
+            }
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Error", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "OK");
+        }
+    }
+    #endregion
+
+
+    #region AnimationBorder
+    private async void AnimationBorder(Border border,bool isDeleteAnimation)
+    {
+        try
+        {
+            var label = (Label)border.Content
+                ?? throw new ArgumentNullException("Label não identificado!");
+
+            if (isDeleteAnimation)
+            {
+                _caracterPrimari = label.Text.First();
+                _originalBackgroundColor = border.BackgroundColor;
+                await border.RotateYTo(90, 500);
+                border.BackgroundColor = Colors.Red;
+                label.TextColor = Colors.White;
+                label.Text = "X";
+                await border.RotateYTo(180, 500);
+            }
+            else
+            {
+                await border.RotateYTo(90, 500);
+                border.BackgroundColor = _originalBackgroundColor;
+                label.TextColor = Colors.White;
+                label.Text = _caracterPrimari.ToString();
+                await border.RotateYTo(0, 500);
+            }
+        }
+        catch(ArgumentNullException ane)
+        {
+            DisplayAlert("Error", ane.ParamName, "Ok");
         }
         catch (Exception ex)
         {
