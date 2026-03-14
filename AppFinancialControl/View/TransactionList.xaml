@@ -24,7 +24,7 @@
                      ColumnDefinitions="50, *, Auto">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer 
-                                CommandParameter="{Binding ., Converter={StaticResource TransactionNameConverter}}"
+                                CommandParameter="{Binding .}}"
                                 Tapped="OpenScreenEdit">
 
                             </TapGestureRecognizer>
