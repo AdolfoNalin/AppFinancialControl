@@ -10,7 +10,7 @@ public partial class TransactionList : ContentPage
 {
     private ITransactionService _service;
     private char _caracterPrimari;
-    private Color _originalBackgroundColor;
+    private Color _originalBackgroundColor = new Color();
 
     public TransactionList(ITransactionService service)
 	{

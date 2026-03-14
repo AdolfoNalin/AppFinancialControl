@@ -81,11 +81,12 @@
 
                 <Label
                     Text="Saldo"
-                    TextColor="#979797"
+                    TextColor="White"
                     FontSize="18"/>
 
                 <Label 
                     x:Name="lblBalance"
+                    TextColor="White"
                     Grid.Row="1"
                     FontSize="36"/>
 
@@ -102,23 +103,25 @@
                     HeightRequest="40"/>
 
                 <Label
+                    TextColor="White"
                     Text="Receita"
                     Grid.Row="3"
-                    TextColor="#979797"
                     FontSize="10"/>
 
                 <Label 
                     x:Name="lblIncome"
+                    TextColor="White"
                     Grid.Row="4"/>
 
                 <Label
+                    TextColor="White"
                     Text="Despesa"
                     Grid.Column="1"
                     Grid.Row="3"
-                    TextColor="#979797"
                     FontSize="10"/>
 
                 <Label 
+                    TextColor="White"
                     x:Name="lblExpense"
                     Grid.Column="1"
                     Grid.Row="4"/>
