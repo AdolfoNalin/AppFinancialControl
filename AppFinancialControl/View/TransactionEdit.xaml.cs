@@ -66,7 +66,7 @@ public partial class TransactionEdit : ContentPage
                 Name = etName.Text ?? throw new ArgumentNullException("Nome é um campo necessário"),
                 Type = rbExpense.IsChecked == true ? TransactionType.Expenses : TransactionType.Income,
                 Date = dpDate.Date ?? throw new ArgumentNullException("Data é um campo necessário"),
-                Value = float.Parse(etValue.Text.Replace("R$", "") ?? throw new ArgumentNullException("Valor é um campo necessário")),
+                Value = Math.Abs(float.Parse(etValue.Text.Replace("R$", "") ?? throw new ArgumentNullException("Valor é um campo necessário"))),
             };
 
             _service.Update(transaction);

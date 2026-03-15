@@ -39,8 +39,8 @@ public partial class TransactionAdd : ContentPage
             {
                 Name = EntryName.Text ?? throw new ArgumentNullException("Nome é um campo necessário"),
                 Date = DPDate.Date ?? throw new ArgumentNullException("Data é um campo necessário"),
-                Value = float.Parse(EntryValue.Text ?? throw new ArgumentNullException("Valor é um campo necessário")
-                ?? throw new FormatException("O campo 'Valor' só pode ser digitado somente números")),
+                Value = Math.Abs(float.Parse(EntryValue.Text ?? throw new ArgumentNullException("Valor é um campo necessário")
+                ?? throw new FormatException("O campo 'Valor' só pode ser digitado somente números"))),
                 Type = rbEntry.IsChecked == true ? TransactionType.Income : TransactionType.Expenses,
             };
 
