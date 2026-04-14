@@ -13,68 +13,75 @@
             <converters:TransactionNameConverter x:Key="TransactionNameConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <VerticalStackLayout>
-        <CollectionView
-            x:Name="cvTransaction">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid 
-                     Padding="15"
-                     ColumnDefinitions="50, *, Auto">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                CommandParameter="{Binding .}}"
-                                Tapped="OpenScreenEdit">
 
-                            </TapGestureRecognizer>
-                        </Grid.GestureRecognizers>
-                        
-                        <Border 
+
+    <Grid
+        RowDefinitions="*, Auto">
+        <ScrollView>
+
+            <CollectionView
+            x:Name="cvTransaction">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid 
+                        Padding="15"
+                        RowDefinitions="Auto"
+                        ColumnDefinitions="50, *, Auto">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                        CommandParameter="{Binding .}"
+                                        Tapped="OpenScreenEdit">
+
+                                </TapGestureRecognizer>
+                            </Grid.GestureRecognizers>
+
+                            <Border 
                             WidthRequest="40"
                             HeightRequest="40"
                             StrokeShape="RoundRectangle 20">
 
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer 
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer 
                                     Tapped="Delete_Tapped"
                                     CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </Border.GestureRecognizers>
-                            
-                            <Label 
+                                    </TapGestureRecognizer>
+                                </Border.GestureRecognizers>
+
+                                <Label 
                                 Text="{Binding Name, Converter={StaticResource TransactionNameConverter}}"
                                 Margin="10"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center"
-                                FontSize="15"/>        
-                        </Border>
+                                FontSize="15"/>
+                            </Border>
 
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label
                                Text="{Binding Name}"/>
-                            <Label 
+                                <Label 
                                 Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
 
-                        </VerticalStackLayout>
-                        <Label 
+                            </VerticalStackLayout>
+                            <Label 
                             Text="{Binding ., Converter={StaticResource TransactionValueConverter}}"
                             TextColor="{Binding ., Converter={StaticResource TransactionValueColorConvert}}"
                             VerticalOptions="Center"
                             Grid.Column="2"/>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
-        </CollectionView>
+            </CollectionView>
+        </ScrollView>
 
         <Border
             Margin="10"
             BackgroundColor="Black"
             Stroke="Transparent"
             Padding="15"
+            Grid.Row="1"
             StrokeShape="30">
-            
+
             <Grid 
                 ColumnDefinitions="*,80"
                 RowDefinitions="Auto,Auto,20, Auto, Auto">
@@ -127,5 +134,5 @@
                     Grid.Row="4"/>
             </Grid>
         </Border>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

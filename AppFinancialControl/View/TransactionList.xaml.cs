@@ -2,6 +2,7 @@ using AppFinancialControl.Models;
 using AppFinancialControl.Service;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Platform;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace AppFinancialControl.View;
@@ -30,7 +31,7 @@ public partial class TransactionList : ContentPage
     {
         try
         {
-            List<Transaction> list = _service.GetAll() ?? 
+            ObservableCollection<Transaction> list = _service.GetAll() ?? 
                 throw new ArgumentNullException("Nenhuma Despesa ou Saldo cadastrado");
 
             float income = list.Where(b => b.Type == TransactionType.Income)
