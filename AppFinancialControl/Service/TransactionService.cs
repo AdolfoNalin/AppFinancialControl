@@ -2,6 +2,7 @@
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -17,16 +18,19 @@ namespace AppFinancialControl.Service
         }
 
         #region GetAll
-        public List<Transaction> GetAll()
+        public ObservableCollection<Transaction> GetAll()
         {
             try
             {
                 List<Transaction> list = _db.GetCollection<Transaction>(_collectionName).Query().OrderBy(t => t.Date).ToList();
 
+                ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
+                list.ToList().ForEach(i => transactions.Add(i));
+
                 if(list is null)
                     throw new ArgumentNullException("Nenhuma transação encontrada");
 
-                return list;
+                return transactions;
             }
             catch(ArgumentNullException ane)
             {
