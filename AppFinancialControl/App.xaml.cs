@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using AppFinancialControl.View;
+﻿using AppFinancialControl.View;
 
 namespace AppFinancialControl
 {
@@ -9,7 +8,15 @@ namespace AppFinancialControl
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(listPage);
+            MainPage = new NavigationPage(new Login());
+        }
+
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var window = base.CreateWindow(activationState);
+            window.Height = 600;
+            window.Width = 300;
+            return window;
         }
     }
 }
