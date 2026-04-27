@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AppFinancialControl.Models
+﻿namespace AppFinancialControl.Models
 {
     public enum TransactionType
     { 
