@@ -1,10 +1,6 @@
 ﻿using AppFinancialControl.Models;
 using LiteDB;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text;
 
 namespace AppFinancialControl.Service
 {
@@ -40,6 +36,29 @@ namespace AppFinancialControl.Service
             {
                 
                 throw;
+            }
+        }
+        #endregion
+
+        #region GetDate
+        public ObservableCollection<Transaction> GetDate(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                List<Transaction> listTransation = _db.GetCollection<Transaction>(_collectionName).Query()
+                    .Where(i => i.Date.Date == startDate.Date.Date && i.Date.Date == endDate.Date.Date).ToList()
+                    ?? throw new ArgumentNullException("Nenhuma transação encontrada") ;
+
+                ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
+
+                listTransation.ToList().ForEach(i => transactions.Add(i));
+
+                return transactions;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
         #endregion
