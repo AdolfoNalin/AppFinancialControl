@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppFinancialControl.View.Login"
+             Title="Login">
+    <VerticalStackLayout
+        Spacing="20"
+        Margin=" 30">
+
+        <Label 
+            Text="Email"/>
+
+        <Entry
+            x:Name="txtEmail"/>
+
+        <Label
+            Text="Senha"/>
+        <Grid
+            ColumnDefinitions="auto,auto">
+            
+            <Entry
+                Grid.Column="0"
+                IsPassword="True"
+                x:Name="txtPassoword"
+                WidthRequest="175"
+                HorizontalOptions="Start"/>
+
+            <ImageButton
+                Source="olho.png"
+                Grid.Column="1"
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="Transparent"
+                Clicked="Button_Clicked_ReadThePassword"/>
+        </Grid>
+
+        <Button
+            Text="Login"
+            HorizontalOptions="Center"
+            Background="ForestGreen"/>
+    </VerticalStackLayout>
+</ContentPage>
