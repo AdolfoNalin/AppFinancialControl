@@ -39,6 +39,7 @@ namespace AppFinancialControl
                         });
 
                 mauiAppBuilder.Services.AddTransient<ITransactionService, TransactionService>();
+                mauiAppBuilder.Services.AddTransient<IUserService, UserService>();
 
                 return mauiAppBuilder;
             }
@@ -58,6 +59,7 @@ namespace AppFinancialControl
                 mauiAppBuilder.Services.AddTransient<TransactionAdd>();
                 mauiAppBuilder.Services.AddTransient<TransactionList>();
                 mauiAppBuilder.Services.AddTransient<TransactionEdit>();
+                mauiAppBuilder.Services.AddTransient<Login>();
 
                 return mauiAppBuilder;
             }
