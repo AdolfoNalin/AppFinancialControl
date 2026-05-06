@@ -1,14 +1,16 @@
-﻿using AppFinancialControl.View;
+﻿using AppFinancialControl.Service;
+using AppFinancialControl.View;
 
 namespace AppFinancialControl
 {
     public partial class App : Application
     {
-        public App(TransactionList listPage)
+        IUserService _service;
+        public App(Login login)
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Login());
+            MainPage = new NavigationPage(login);
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
