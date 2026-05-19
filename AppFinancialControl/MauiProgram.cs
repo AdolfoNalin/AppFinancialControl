@@ -1,12 +1,15 @@
 ﻿using AppFinancialControl.Service;
 using AppFinancialControl.View;
 using LiteDB;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AppFinancialControl
 {
     public static class MauiProgram
     {
+        public static string endPointAPI = "";
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -23,6 +26,14 @@ namespace AppFinancialControl
             #if DEBUG
     		builder.Logging.AddDebug();
             #endif
+
+            using var stream = FileSystem.OpenAppPackageFileAsync("appsetting.json").GetAwaiter().GetResult();
+
+            var config = new ConfigurationBuilder().AddJsonStream(stream).Build();
+
+            builder.Configuration.AddConfiguration(config);
+
+            endPointAPI = config["APIFinancialControl:Endpoint"];
 
             return builder.Build();
         }
