@@ -52,26 +52,22 @@ namespace AppFinancialControl.Service
         /// <returns>Verdadeiro ou falso</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public bool Login(User user)
+        public User Login(UserLogin user)
         {
             try
             {
-                bool result = false;
-
                 List<User> list = _db.GetCollection<User>(_collectionName).Query().OrderBy(u => u.Id).ToList();
-                User userIsTrue = list.Where<User>(u => u.Login.ToUpper().Contains(user.Login.ToUpper())).FirstOrDefault()
+                User userLogin = list.Where<User>(u => u.Login.ToUpper().Contains(user.Login.ToUpper())).FirstOrDefault()
                     ?? throw new ArgumentNullException("Usuário não encontrado", "Verifique o login");
 
-                if (userIsTrue.Password.Equals(user.Password))
-                {
-                    result = true;
-                }
-                else
+                if (!userLogin.Password.Equals(user.Password))
                 {
                     throw new ArgumentException("Verifique a senha", "Senha incorreta");
                 }
-
-                return result;
+                else
+                {
+                    return userLogin;   
+                }
             }
             catch(ArgumentNullException ane)
             {
