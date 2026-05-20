@@ -31,7 +31,7 @@ public partial class TransactionList : ContentPage
     {
         try
         {
-            ObservableCollection<Transaction> list = _service.GetAll() ?? 
+            ObservableCollection<Transaction> list = _service.GetAll(UserSession.Id) ?? 
                 throw new ArgumentNullException("Nenhuma Despesa ou Saldo cadastrado");
 
             float income = list.Where(b => b.Type == TransactionType.Income)
@@ -125,7 +125,6 @@ public partial class TransactionList : ContentPage
         }
     }
     #endregion
-
 
     #region AnimationBorder
     private async void AnimationBorder(Border border,bool isDeleteAnimation)
