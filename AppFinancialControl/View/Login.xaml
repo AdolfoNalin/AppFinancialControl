@@ -17,25 +17,61 @@
             Text="Senha"/>
         <Grid
             ColumnDefinitions="auto,auto">
-            
+
             <Entry
                 Grid.Column="0"
                 IsPassword="True"
                 x:Name="txtPassoword"
                 WidthRequest="175"
                 HorizontalOptions="Start"/>
-
-            <ImageButton
-                Source="olho.png"
+            <Border
                 Grid.Column="1"
-                HorizontalOptions="FillAndExpand"
                 BackgroundColor="Transparent"
-                Clicked="Button_Clicked_ReadThePassword"/>
+                StrokeShape="RoundRectangle 14">
+
+                <ImageButton
+                Source="olho_fechado.png"
+                BackgroundColor="Transparent"
+                Clicked="ImageButton_Clicked_IsSeePassword"
+                x:Name="btnImageSee"/>
+
+            </Border>
+        </Grid>
+
+        <Grid
+            BackgroundColor="Transparent"
+            HorizontalOptions="Center"
+            RowDefinitions="Auto, Auto, Auto"
+            RowSpacing="10">
+
+            <Button 
+                Clicked="Button_Clicked_EntryGoogle"
+                BackgroundColor="DimGrey"
+                Text="Entrar com o Google"
+                FontSize="9"
+                Grid.Row="0"
+                ImageSource="google.png"/>
+            <Button
+                Clicked="Button_Clicked_EntryGithub"
+                BackgroundColor="DimGrey"
+                FontSize="9"
+                Text="Entrar com o Github"
+                ImageSource="github.png"
+                Grid.Row="1"/>
+            <Button
+                Clicked="Button_Clicked_EntryFacebook"
+                BackgroundColor="DimGrey"
+                FontSize="9"
+                Text="Entrar com o Facebook"
+                Grid.Row="2"
+                ImageSource="facebook.png"/>
+
         </Grid>
 
         <Button
+            BackgroundColor="DimGrey"
             Text="Login"
             HorizontalOptions="Center"
-            Background="ForestGreen"/>
+            Clicked="Button_Clicked_Login"/>
     </VerticalStackLayout>
 </ContentPage>
