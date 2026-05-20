@@ -14,11 +14,11 @@ namespace AppFinancialControl.Service
         }
 
         #region GetAll
-        public ObservableCollection<Transaction> GetAll()
+        public ObservableCollection<Transaction> GetAll(Guid id)
         {
             try
             {
-                List<Transaction> list = _db.GetCollection<Transaction>(_collectionName).Query().OrderBy(t => t.Date).ToList();
+                List<Transaction> list = _db.GetCollection<Transaction>(_collectionName).Query().Where(u => u.Id == id).OrderBy(t => t.Date).ToList();
 
                 ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
                 list.ToList().ForEach(i => transactions.Add(i));
