@@ -27,7 +27,7 @@ namespace AppFinancialControl
     		builder.Logging.AddDebug();
             #endif
 
-            using var stream = FileSystem.OpenAppPackageFileAsync("appsetting.json").GetAwaiter().GetResult();
+            using var stream = FileSystem.OpenAppPackageFileAsync("appsettings.json").GetAwaiter().GetResult();
 
             var config = new ConfigurationBuilder().AddJsonStream(stream).Build();
 
