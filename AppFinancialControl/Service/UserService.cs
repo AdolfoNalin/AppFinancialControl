@@ -1,5 +1,8 @@
-﻿using AppFinancialControl.Models;
+﻿using AppFinancialControl.Libraries;
+using AppFinancialControl.Models;
 using LiteDB;
+using Newtonsoft.Json;
+using System.Net.Http.Json;
 
 namespace AppFinancialControl.Service
 {
@@ -20,7 +23,7 @@ namespace AppFinancialControl.Service
         /// <exception cref="ArgumentNullException">Quando o usuário é nulo</exception>
         /// <exception cref="Exception">Geral</exception>
         /// <param name="user">Objeto usuário</param>
-        public void Delete(User user)
+        public async void Delete(User user)
         {
             try
             {
@@ -31,9 +34,10 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<User>(_collectionName).Delete(user.Id);
+                    await DeleteAPI(user);
                 }
             }
-            catch(ArgumentNullException ane)
+            catch (ArgumentNullException ane)
             {
                 throw ane;
             }
@@ -66,14 +70,14 @@ namespace AppFinancialControl.Service
                 }
                 else
                 {
-                    return userLogin;   
+                    return userLogin;
                 }
             }
-            catch(ArgumentNullException ane)
+            catch (ArgumentNullException ane)
             {
                 throw ane;
             }
-            catch(ArgumentException ae)
+            catch (ArgumentException ae)
             {
                 throw ae;
             }
@@ -122,7 +126,7 @@ namespace AppFinancialControl.Service
         {
             try
             {
-                if(user is null)
+                if (user is null)
                 {
                     throw new ArgumentNullException("Usuário está vazio", "Preencha todos os campos");
                 }
@@ -131,9 +135,117 @@ namespace AppFinancialControl.Service
                     _db.GetCollection<User>(_collectionName).Update(user);
                 }
             }
-            catch(ArgumentNullException ane)
+            catch (ArgumentNullException ane)
             {
                 throw ane;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region DeleteAPI
+        private async Task<String> DeleteAPI(User user)
+        {
+            try
+            {
+                string message = "";
+                if (user != null)
+                {
+                    HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                    HttpResponseMessage response = await client.DeleteAsync($"User/Delete/{user.Id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        message = await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        message = await response.Content.ReadAsStringAsync();
+                    }
+                }
+                else
+                {
+                    throw new ArgumentNullException("Usuário é nullo");
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region Login
+        public async Task<User> LoginAPI(User user)
+        {
+            try
+            {
+                User userResponse = null;
+
+                HttpClient client = ConnectionLocalhost.ConnectionAPIUser();
+                HttpResponseMessage response = await client.PostAsJsonAsync("User/Login", user);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    userResponse = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    string message = await response.Content.ReadAsStringAsync();
+                }
+
+                return userResponse;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region InsertAPI
+        public async Task<Boolean> InsertAPI(User user)
+        {
+            try
+            {
+                bool result = false;
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.PostAsJsonAsync("User/Insert", user);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject<Boolean>(await response.Content.ReadAsStringAsync());
+                }
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region UpdateAPI
+        public async Task<Boolean> UpdateAPI(User user)
+        {
+            try
+            {
+                bool result = false;
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.PutAsJsonAsync("User/Update", user);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject<Boolean>(await response.Content.ReadAsStringAsync());
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
