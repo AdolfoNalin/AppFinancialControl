@@ -1,10 +1,13 @@
-﻿using AppFinancialControl.Models;
+﻿using AppFinancialControl.Libraries;
+using AppFinancialControl.Models;
 using LiteDB;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 
 namespace AppFinancialControl.Service
 {
-    public class TransactionService : ITransactionService   
+    public class TransactionService : ITransactionService
     {
         private readonly LiteDatabase _db;
         private readonly string _collectionName = "Transactions";
@@ -23,18 +26,18 @@ namespace AppFinancialControl.Service
                 ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
                 list.ToList().ForEach(i => transactions.Add(i));
 
-                if(list is null)
+                if (list is null)
                     throw new ArgumentNullException("Nenhuma transação encontrada");
 
                 return transactions;
             }
-            catch(ArgumentNullException ane)
+            catch (ArgumentNullException ane)
             {
                 throw;
             }
             catch (Exception ex)
             {
-                
+
                 throw;
             }
         }
@@ -47,7 +50,7 @@ namespace AppFinancialControl.Service
             {
                 List<Transaction> listTransation = _db.GetCollection<Transaction>(_collectionName).Query()
                     .Where(i => i.Date.Date == startDate.Date.Date && i.Date.Date == endDate.Date.Date).ToList()
-                    ?? throw new ArgumentNullException("Nenhuma transação encontrada") ;
+                    ?? throw new ArgumentNullException("Nenhuma transação encontrada");
 
                 ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
 
@@ -74,9 +77,9 @@ namespace AppFinancialControl.Service
                     _db.GetCollection<Transaction>(_collectionName)
                         .Insert(transaction);
             }
-            catch(ArgumentNullException ane)
+            catch (ArgumentNullException ane)
             {
-                
+
             }
             catch (Exception)
             {
@@ -120,6 +123,138 @@ namespace AppFinancialControl.Service
             {
 
                 throw;
+            }
+        }
+        #endregion
+
+        #region GetAll
+        public static async Task<ObservableCollection<Transaction>> GetAllAPI(Guid userId)
+        {
+            try
+            {
+                ObservableCollection<Transaction> trancations = null;
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.GetAsync($"Transaction/GetAll/{userId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    trancations = JsonConvert.DeserializeObject<ObservableCollection<Transaction>>(await response.Content.ReadAsStringAsync())
+                        ?? throw new ArgumentNullException("Nenhuma transação encotrada!");
+                }
+
+                return trancations;
+            }
+            catch (ArgumentNullException ane)
+            {
+                throw ane;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region GetDate
+        public static async Task<ObservableCollection<Transaction>> GetDateAPI(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                ObservableCollection<Transaction> trancations = null;
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.GetAsync($"Transaction/GetDate?startDate={startDate}&endDate{endDate}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    trancations = JsonConvert.DeserializeObject<ObservableCollection<Transaction>>(await response.Content.ReadAsStringAsync());
+                }
+
+                return trancations;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region InsertAPI
+        public async Task<String> InsertAPI(Transaction transaction)
+        {
+            try
+            {
+                string message = "";
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.PostAsJsonAsync("Transaction/Insert", transaction);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    message = await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    message = await response.Content.ReadAsStringAsync();
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region UpdateAPI
+        public async Task<String> UpdateAPI(Transaction transaction)
+        {
+            try
+            {
+                string message = "";
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.PutAsJsonAsync("Transaction/Update", transaction);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    message = await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    message = await response.Content.ReadAsStringAsync();
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            { 
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region Delete
+        public async Task<String> DeleteAPI(Guid transactionId)
+        {
+            try
+            {
+                string message = "";
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.DeleteAsync($"Transaction/Delete/{transactionId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    message = await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    message = await response.Content.ReadAsStringAsync();
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         #endregion
