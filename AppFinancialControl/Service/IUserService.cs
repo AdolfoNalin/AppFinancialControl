@@ -4,9 +4,9 @@ namespace AppFinancialControl.Service
 {
     public interface IUserService
     {
-        public User Login(UserLogin user);
-        public void Insert(User user);
-        public void Delete(User user);
-        public void Update(User user);
+        public Task<User> Login(UserLogin user);
+        public Task<string> Insert(User user);
+        public Task<string> Delete(User user);
+        public Task<string> Update(User user);
     }
 }
