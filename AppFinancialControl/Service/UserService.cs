@@ -23,7 +23,7 @@ namespace AppFinancialControl.Service
         /// <exception cref="ArgumentNullException">Quando o usuário é nulo</exception>
         /// <exception cref="Exception">Geral</exception>
         /// <param name="user">Objeto usuário</param>
-        public async void Delete(User user)
+        public async Task<String> Delete(User user)
         {
             try
             {
@@ -35,6 +35,7 @@ namespace AppFinancialControl.Service
                 {
                     _db.GetCollection<User>(_collectionName).Delete(user.Id);
                     await DeleteAPI(user);
+                    return "Usuário foi deletedo com sucesso";
                 }
             }
             catch (ArgumentNullException ane)
@@ -56,13 +57,13 @@ namespace AppFinancialControl.Service
         /// <returns>Verdadeiro ou falso</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public User Login(UserLogin user)
+        public async Task<User> Login(UserLogin user)
         {
             try
             {
                 List<User> list = _db.GetCollection<User>(_collectionName).Query().OrderBy(u => u.Id).ToList();
                 User userLogin = list.Where<User>(u => u.Login.ToUpper().Contains(user.Login.ToUpper())).FirstOrDefault()
-                    ?? throw new ArgumentNullException("Usuário não encontrado", "Verifique o login");
+                    ?? throw new ArgumentNullException("Usuário não encontrado");
 
                 if (!userLogin.Password.Equals(user.Password))
                 {
@@ -70,8 +71,20 @@ namespace AppFinancialControl.Service
                 }
                 else
                 {
-                    return userLogin;
+                    User userResponse = await LoginAPI(user);
+                    if (userResponse.Login.Contains(user.Login))
+                    {
+                        return userResponse;
+                    }
+                    else
+                    {
+                        return userLogin;
+                    }
                 }
+            }
+            catch(NullReferenceException nre)
+            {
+                throw nre;
             }
             catch (ArgumentNullException ane)
             {
@@ -93,7 +106,7 @@ namespace AppFinancialControl.Service
         /// Método que insere o usuário no banco de dados
         /// </summary>
         /// <param name="user"></param>
-        public void Insert(User user)
+        public async Task<String> Insert(User user)
         {
             try
             {
@@ -103,7 +116,16 @@ namespace AppFinancialControl.Service
                 }
                 else
                 {
+                    user.ClientId = ClientSession.Id;
                     _db.GetCollection<User>(_collectionName).Insert(user);
+                    if (await InsertAPI(user))
+                    {
+                        return "Usuário cadastrado com sucesso";
+                    }
+                    else
+                    {
+                        return "Usuário cadastrado localmente";
+                    }
                 }
             }
             catch (ArgumentNullException ane)
@@ -122,7 +144,7 @@ namespace AppFinancialControl.Service
         /// Método responsável por atualizar o usuário
         /// </summary>
         /// <param name="user"></param>
-        public void Update(User user)
+        public async Task<string> Update(User user)
         {
             try
             {
@@ -133,6 +155,9 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<User>(_collectionName).Update(user);
+                    await UpdateAPI(user);
+
+                    return "Usuário atualizado com sucesso";
                 }
             }
             catch (ArgumentNullException ane)
@@ -181,7 +206,7 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region Login
-        public async Task<User> LoginAPI(User user)
+        public async Task<User> LoginAPI(UserLogin user)
         {
             try
             {
@@ -194,12 +219,31 @@ namespace AppFinancialControl.Service
                 {
                     userResponse = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
                 }
+                else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    string message = await response.Content.ReadAsStringAsync();
+                    throw new NullReferenceException(message);
+                }
+                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    string message = await response.Content.ReadAsStringAsync();
+                    throw new ArgumentNullException(message);
+                }
                 else
                 {
                     string message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
                 }
 
                 return userResponse;
+            }
+            catch(ArgumentNullException ane)
+            {
+                throw ane;
+            }
+            catch(NullReferenceException nre)
+            {
+                throw nre;
             }
             catch (Exception ex)
             {
@@ -221,7 +265,7 @@ namespace AppFinancialControl.Service
                 {
                     result = JsonConvert.DeserializeObject<Boolean>(await response.Content.ReadAsStringAsync());
                 }
-                
+
                 return result;
             }
             catch (Exception ex)
@@ -240,7 +284,7 @@ namespace AppFinancialControl.Service
                 HttpClient client = ConnectionLocalhost.ConnectionAPI();
                 HttpResponseMessage response = await client.PutAsJsonAsync("User/Update", user);
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     result = JsonConvert.DeserializeObject<Boolean>(await response.Content.ReadAsStringAsync());
                 }
