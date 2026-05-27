@@ -21,7 +21,7 @@ namespace AppFinancialControl.Service
         {
             try
             {
-                List<Transaction> list = _db.GetCollection<Transaction>(_collectionName).Query().Where(u => u.Id == id).OrderBy(t => t.Date).ToList();
+                List<Transaction> list = _db.GetCollection<Transaction>(_collectionName).Query().Where(u => u.UserId == id).OrderBy(t => t.Date).ToList();
 
                 ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
                 list.ToList().ForEach(i => transactions.Add(i));
@@ -74,8 +74,10 @@ namespace AppFinancialControl.Service
                 if (transaction == null)
                     throw new ArgumentNullException("Transação não concluida. Os campos estão vazios");
                 else
-                    _db.GetCollection<Transaction>(_collectionName)
-                        .Insert(transaction);
+                {
+                    _db.GetCollection<Transaction>(_collectionName).Insert(transaction);
+                    InsertAPI(transaction);
+                }
             }
             catch (ArgumentNullException ane)
             {
@@ -226,7 +228,7 @@ namespace AppFinancialControl.Service
                 return message;
             }
             catch (Exception ex)
-            { 
+            {
                 throw ex;
             }
         }
