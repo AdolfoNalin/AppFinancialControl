@@ -37,6 +37,7 @@ public partial class TransactionAdd : ContentPage
         {
             Transaction transaction = new Transaction()
             {
+                UserId = UserSession.Id,
                 Name = EntryName.Text ?? throw new ArgumentNullException("Nome é um campo necessário"),
                 Date = DPDate.Date ?? throw new ArgumentNullException("Data é um campo necessário"),
                 Value = Math.Abs(float.Parse(EntryValue.Text ?? throw new ArgumentNullException("Valor é um campo necessário")

@@ -16,7 +16,7 @@ namespace AppFinancialControl
         protected override Window CreateWindow(IActivationState? activationState)
         {
             var window = base.CreateWindow(activationState);
-            window.Height = 600;
+            window.Height = 700;
             window.Width = 300;
             return window;
         }
