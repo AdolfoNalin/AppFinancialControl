@@ -4,18 +4,23 @@
              x:Class="AppFinancialControl.View.Login"
              Title="Login">
     <VerticalStackLayout
-        Spacing="20"
-        Margin=" 30">
+        Padding="10,30,10,30"
+        Spacing="10">
+        
 
         <Label 
+            FontSize="20"
             Text="Email"/>
 
         <Entry
+            FontSize="17"
             x:Name="txtEmail"/>
 
         <Label
+            FontSize="20"
             Text="Senha"/>
         <Grid
+            ColumnSpacing="10"
             ColumnDefinitions="auto,auto">
 
             <Entry
@@ -23,55 +28,72 @@
                 IsPassword="True"
                 x:Name="txtPassoword"
                 WidthRequest="175"
-                HorizontalOptions="Start"/>
+                Completed="Clicked_Enter_Button"
+                HorizontalOptions="CenterAndExpand"/>
+
             <Border
+                HorizontalOptions="EndAndExpand"
                 Grid.Column="1"
                 BackgroundColor="Transparent"
                 StrokeShape="RoundRectangle 14">
 
                 <ImageButton
-                Source="olho_fechado.png"
-                BackgroundColor="Transparent"
-                Clicked="ImageButton_Clicked_IsSeePassword"
-                x:Name="btnImageSee"/>
+                    Source="olho_fechado.png"
+                    BackgroundColor="Transparent"
+                    Clicked="ImageButton_Clicked_IsSeePassword"
+                    x:Name="btnImageSee"/>
 
             </Border>
         </Grid>
 
         <Grid
+           
             BackgroundColor="Transparent"
             HorizontalOptions="Center"
-            RowDefinitions="Auto, Auto, Auto"
+            RowDefinitions="Auto, Auto, Auto, Auto"
             RowSpacing="10">
 
             <Button 
                 Clicked="Button_Clicked_EntryGoogle"
                 BackgroundColor="DimGrey"
                 Text="Entrar com o Google"
-                FontSize="9"
+                TextColor="White"
+                FontSize="20"
                 Grid.Row="0"
                 ImageSource="google.png"/>
             <Button
                 Clicked="Button_Clicked_EntryGithub"
                 BackgroundColor="DimGrey"
-                FontSize="9"
+                TextColor="White"
+                FontSize="20"
                 Text="Entrar com o Github"
                 ImageSource="github.png"
                 Grid.Row="1"/>
             <Button
                 Clicked="Button_Clicked_EntryFacebook"
                 BackgroundColor="DimGrey"
-                FontSize="9"
+                FontSize="20"
+                TextColor="White"
                 Text="Entrar com o Facebook"
                 Grid.Row="2"
                 ImageSource="facebook.png"/>
+
+            <Button
+                Clicked="Button_Clicked_EntryForApp"
+                BackgroundColor="DimGrey"
+                FontSize="20"
+                TextColor="White"
+                Text="Cadastrar"
+                Grid.Row="3"/>
 
         </Grid>
 
         <Button
             BackgroundColor="DimGrey"
             Text="Login"
+            FontSize="25"
             HorizontalOptions="Center"
-            Clicked="Button_Clicked_Login"/>
+            Clicked="Button_Clicked_Login"
+            TextColor="White"/>
     </VerticalStackLayout>
 </ContentPage>
