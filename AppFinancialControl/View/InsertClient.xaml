@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppFinancialControl.View.InsertClient">
+    <VerticalStackLayout>
+        <Border
+            HorizontalOptions="Center"
+            Padding="5"
+            StrokeShape="RoundRectangle 5"
+            BackgroundColor ="DimGrey">
+
+            <Label
+                FontSize="20"
+                FontAttributes="Bold"
+                Text="Primeira etapa"
+                HorizontalOptions="Center"/>
+
+        </Border>
+
+        <Grid
+            RowSpacing="3"
+            Padding="5"
+            Margin="10"
+            RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+
+            <Label 
+                FontSize="20"
+                FontAttributes="Bold"
+                Text="Nome:"
+                Grid.Row="0"/>
+            <Entry 
+                FontSize="17"
+                x:Name="txtNameClient"
+                Grid.Row="1"/>
+
+            <Label 
+                FontSize="20"
+                FontAttributes="Bold"
+                Text="Email:"
+                Grid.Row="2"/>
+            <Entry 
+                FontSize="17"
+                x:Name="txtEmailClient"
+                Grid.Row="3"/>
+
+            <Label 
+                FontSize="20"
+                FontAttributes="Bold"
+                 Text="Salario:"
+                 Grid.Row="4"/>
+            <Entry 
+                FontSize="17"
+                x:Name="txtSalaryClient"
+                Grid.Row="5"/>
+
+        </Grid>
+
+        <Grid
+            Padding="1"
+            Margin="50"
+            ColumnSpacing="35"
+            ColumnDefinitions="Auto, Auto">
+
+            <Button
+                FontSize="20"
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="DimGrey"
+                HorizontalOptions="Center"
+                Text="Cancelar"
+                Clicked="Button_Clicked_Cancel"/>
+
+            <Button
+                TextColor="White"
+                FontSize="20"
+                FontAttributes="Bold"
+                Clicked="Button_Clicked_Next"
+                BackgroundColor="DimGrey"
+                HorizontalOptions="Center"
+                Grid.Column="1"
+                Text="Proximo"/>
+
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
