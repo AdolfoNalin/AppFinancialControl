@@ -4,7 +4,7 @@
              xmlns:converters="clr-namespace:AppFinancialControl.Libraries.Converters"
              x:Class="AppFinancialControl.View.TransactionList"
              Title="Listagem "
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="True">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -13,6 +13,16 @@
             <converters:TransactionNameConverter x:Key="TransactionNameConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <NavigationPage.TitleView>
+        <Button
+            TextColor="White"
+            FontSize="10"
+            BackgroundColor="Transparent"
+            Text="Perfil"
+            ImageSource="perfil_usuario.png"/>
+
+    </NavigationPage.TitleView>
 
 
     <Grid
@@ -24,9 +34,9 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid 
-                        Padding="15"
-                        RowDefinitions="Auto"
-                        ColumnDefinitions="50, *, Auto">
+                            Padding="15"
+                            RowDefinitions="Auto"
+                            ColumnDefinitions="50, *, Auto">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer 
                                         CommandParameter="{Binding .}"
@@ -36,9 +46,9 @@
                             </Grid.GestureRecognizers>
 
                             <Border 
-                            WidthRequest="40"
-                            HeightRequest="40"
-                            StrokeShape="RoundRectangle 20">
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                StrokeShape="RoundRectangle 20">
 
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer 
