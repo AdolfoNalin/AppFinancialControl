@@ -6,11 +6,11 @@ namespace AppFinancialControl
     public partial class App : Application
     {
         IUserService _service;
-        public App(Login login)
+        public App(GoalsList goals)
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(login);
+            MainPage = new AppShell();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -19,6 +19,7 @@ namespace AppFinancialControl
             window.Height = 700;
             window.Width = 300;
             return window;
+
         }
     }
 }
