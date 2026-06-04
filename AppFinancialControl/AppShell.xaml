@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="AppFinancialControl.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:AppFinancialControl.View"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="#262626">
+
+    <TabBar>
+        <ShellContent
+            Title="Metas"
+            Icon="meta.png"
+            Route="goals"
+            ContentTemplate="{DataTemplate views:GoalsList}"/>
+
+        <ShellContent
+            Icon="transacao_de_dinheiro.png"
+            Title="Transações"
+            Route="transaction"
+            ContentTemplate="{DataTemplate views:TransactionList}"/>
+
+        <ShellContent
+            Icon="home.png"
+            Title="Home"
+            Route="home"
+            ContentTemplate="{DataTemplate views:Home}"/>
+
+        <ShellContent
+            Icon="extrato_bancario.png"
+            Title="Extrato"
+            Route="extract"
+            ContentTemplate="{DataTemplate views:Extract}"/>
+
+        <ShellContent
+            Icon="perfil.png"
+             Title="Perfil"
+             Route="perfil"
+             ContentTemplate="{DataTemplate views:Perfil}"/>
+    </TabBar>
+</Shell>
