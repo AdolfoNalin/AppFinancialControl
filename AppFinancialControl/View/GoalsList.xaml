@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppFinancialControl.View.GoalsList"
+             Title="InsertGoals"
+             NavigationPage.HasNavigationBar="False">
+
+
+    <Grid
+        RowDefinitions="Auto, *, Auto, Auto">
+
+        <Border
+            Padding="10"
+            Margin="10"
+            HorizontalOptions="FillAndExpand"
+            StrokeShape="12"
+            BackgroundColor="#272727">
+            <Label
+                HorizontalOptions="Center"
+                Text="Metas"/>
+        </Border>
+
+        <Grid
+            Grid.Row="1"
+            Margin="10"
+            Padding="10"
+            ColumnDefinitions="Auto, Auto">
+            <ScrollView>
+                <CollectionView
+                    x:Name="cvGoalsList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Padding="10"
+                                RowDefinitions="*, Auto"
+                                ColumnDefinitions="50, *, Auto">
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </Grid>
+
+
+        <Border
+            BackgroundColor="#272727"
+            Grid.Row="5"
+            StrokeShape="10"
+            Padding="6"
+            Margin="10">
+            <Grid
+                ColumnDefinitions="*, Auto"
+                RowDefinitions="Auto, Auto">
+                <Label
+                    Grid.Row="0"
+                    Text="Metas alcansadas: "/>
+                <ImageButton
+                    HorizontalOptions="End"
+                    Grid.Row="0"
+                    HeightRequest="10"
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    Source="mais.png"
+                    Clicked="ImagemClicked_NewGoals"/>
+                <Label
+                    Grid.Row="1"
+                    Text="Saldo Total: "/>
+            </Grid>
+
+        </Border>
+    </Grid>
+</ContentPage>
