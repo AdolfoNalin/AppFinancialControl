@@ -39,10 +39,7 @@ public partial class Login : ContentPage
                 UserSession.Password = user.Password;
                 UserSession.Token = user.Token;
 
-                TransactionList list = this.Handler.MauiContext.Services.GetService<TransactionList>()
-                    ?? throw new ArgumentNullException("MAUI Context");
-
-                Navigation.PushAsync(list);
+                Application.Current.MainPage = new AppShell();
             }
             else
             {
