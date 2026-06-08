@@ -30,7 +30,7 @@
             Icon="extrato_bancario.png"
             Title="Extrato"
             Route="extract"
-            ContentTemplate="{DataTemplate views:Extract}"/>
+            ContentTemplate="{DataTemplate views:ExtractList}"/>
 
         <ShellContent
             Icon="perfil.png"
