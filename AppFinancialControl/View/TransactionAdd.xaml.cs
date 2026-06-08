@@ -39,13 +39,13 @@ public partial class TransactionAdd : ContentPage
             {
                 UserId = UserSession.Id,
                 Name = EntryName.Text ?? throw new ArgumentNullException("Nome é um campo necessário"),
-                Date = DPDate.Date ?? throw new ArgumentNullException("Data é um campo necessário"),
+                Date = DateOnly.Parse(DPDate.Date.Value.Date.ToString("D") ?? throw new ArgumentNullException("Data é um campo necessário")),
                 Value = Math.Abs(float.Parse(EntryValue.Text ?? throw new ArgumentNullException("Valor é um campo necessário")
                 ?? throw new FormatException("O campo 'Valor' só pode ser digitado somente números"))),
                 Type = rbEntry.IsChecked == true ? TransactionType.Income : TransactionType.Expenses,
             };
 
-            _service.Add(transaction);
+            TransactionService.InsertAPI(transaction);
 
             DisplayAlert("Aceito", "Transição salva", "ok");
 
