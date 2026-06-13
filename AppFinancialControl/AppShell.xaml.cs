@@ -8,9 +8,9 @@ public partial class AppShell : Shell
 	{
         InitializeComponent();
 
-        Dispatcher.Dispatch(async () =>
-        {
-            await Shell.Current.GoToAsync("//home");
-        });
+        //Dispatcher.Dispatch(async () =>
+        //{
+        //    await Shell.Current.GoToAsync("//home");x
+        //});
     }
 }

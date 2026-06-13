@@ -10,7 +10,7 @@ namespace AppFinancialControl
         {
             InitializeComponent();
 
-            MainPage = login;
+            MainPage = new AppShell();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
