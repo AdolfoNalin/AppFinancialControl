@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:AppFinancialControl.Libraries.Converters"
+             x:Class="AppFinancialControl.View.ExtractList"
+             Title="ExtractList">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:TransactionValueColorConvert x:Key="TransactionValueColorConvert"/>
+            <converters:TransactionValueConverter x:Key="TransactionValueConverter"/>
+            <converters:TransactionNameConverter x:Key="TransactionNameConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid
+        RowDefinitions="Auto,Auto,*, 150">
+        <Border
+            HorizontalOptions="FillAndExpand"
+            Margin="10"
+            Padding="10"
+            BackgroundColor="#272727"
+            StrokeShape="12">
+
+            <Label
+                HorizontalOptions="Center"
+                Text="Extrato"/>
+        </Border>
+
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="*, Auto">
+
+            <Border
+                HorizontalOptions="Fill"
+                Grid.Column="0"
+                StrokeShape="12"
+                BackgroundColor="#272727"
+                Padding="10"
+                Margin="5">
+
+                <DatePicker
+                Grid.Column="1"
+                HorizontalOptions="End"/>
+            </Border>
+        </Grid>
+
+        <ScrollView>
+            <CollectionView
+                    x:Name="cvExtract">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Padding="10"
+                            Margin="10"
+                            ColumnDefinitions="50,*,Auto"
+                            RowDefinitions="2">
+
+                            <Label
+                                Text="{Binding Title, Converter={StaticResource TransactionNameConverter}}"
+                                Margin="10"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                FontSize="15"/>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label
+                                    Text="{Binding Title}"/>
+                                <Label
+                                    Text="{Binding Description}"/>
+                                <Label
+                                    Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
+                            </VerticalStackLayout>
+
+                            <Label
+                                Text="{Binding . , Converter={StaticResource TransactionValueConverter}}"
+                                TextColor="{Binding ., Converter={StaticResource TransactionValueColorConvert}}"
+                                VerticalOptions="Center"
+                                Grid.Column="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+        <Border
+             Margin="10"
+             BackgroundColor="Black"
+             Padding="15"
+             Grid.Row="3"
+             StrokeShape="30">
+
+            <Grid 
+                 ColumnDefinitions="*,80"
+                 RowDefinitions="Auto,Auto,20, Auto, Auto">
+
+                <Label
+                     Text="Saldo"
+                     TextColor="White"
+                     FontSize="18"/>
+
+                <Label 
+                     x:Name="lblBalance"
+                     TextColor="White"
+                     Grid.Row="1"
+                     FontSize="36"/>
+
+                <Label
+                    TextColor="White"
+                     Text="Receita"
+                     Grid.Row="3"
+                     FontSize="10"/>
+
+                <Label 
+                     x:Name="lblIncome"
+                     TextColor="White"
+                     Grid.Row="4"/>
+
+                <Label
+                     TextColor="White"
+                     Text="Despesa"
+                     Grid.Column="1"
+                     Grid.Row="3"
+                     FontSize="10"/>
+
+                <Label 
+                     TextColor="White"
+                     x:Name="lblExpense"
+                     Grid.Column="1"
+                     Grid.Row="4"/>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
