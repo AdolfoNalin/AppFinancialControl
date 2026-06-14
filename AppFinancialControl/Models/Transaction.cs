@@ -12,7 +12,7 @@
         public Guid UserId { get; set; }
         public string Name { get; set; }
         public TransactionType Type { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateOnly Date { get; set; }
         public float Value { get; set; }
 
         public Transaction()
