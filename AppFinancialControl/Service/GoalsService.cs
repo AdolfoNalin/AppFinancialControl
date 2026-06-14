@@ -1,6 +1,10 @@
-﻿using AppFinancialControl.Models;
+﻿using AppFinancialControl.Libraries;
+using AppFinancialControl.Models;
 using LiteDB;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http.Json;
 
 namespace AppFinancialControl.Service
 {
@@ -15,9 +19,9 @@ namespace AppFinancialControl.Service
 
         #region GetUserId
         /// <summary>
-        /// 
+        /// Function responsable search goals referenci parameter userid
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">Id user</param>
         /// <returns></returns>
         /// <exception cref="NullReferenceException"></exception>
         ObservableCollection<Goals> IGoalsService.GetUserId(Guid userId)
@@ -30,17 +34,17 @@ namespace AppFinancialControl.Service
                 //}
                 //else
                 //{
-                    ObservableCollection<Goals> observableGoals = new ObservableCollection<Goals>();   
-                    List<Goals> list = _db.GetCollection<Goals>(_name).Query().OrderBy(g => g.Date).ToList();
-                    list.ForEach(g =>
-                    {
-                        observableGoals.Add(g);
-                    });
+                ObservableCollection<Goals> observableGoals = new ObservableCollection<Goals>();
+                List<Goals> list = _db.GetCollection<Goals>(_name).Query().OrderBy(g => g.Date).ToList();
+                list.ForEach(g =>
+                {
+                    observableGoals.Add(g);
+                });
 
-                    return observableGoals;
+                return observableGoals;
                 //}
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
                 throw nre;
             }
@@ -53,7 +57,7 @@ namespace AppFinancialControl.Service
 
         #region Insert
         /// <summary>
-        /// 
+        /// Function responsable for insert goals in database localhosts
         /// </summary>
         /// <param name="goals"></param>
         /// <returns></returns>
@@ -63,7 +67,7 @@ namespace AppFinancialControl.Service
             try
             {
                 bool result = false;
-                if(goals == null)
+                if (goals == null)
                 {
                     throw new NullReferenceException("Preencha todos os campos");
                 }
@@ -75,7 +79,7 @@ namespace AppFinancialControl.Service
 
                 return result;
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
                 throw nre;
             }
@@ -87,6 +91,12 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region Update
+        /// <summary>
+        /// Function responsable for Update in localhost
+        /// </summary>
+        /// <param name="goals"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
         bool IGoalsService.Update(Goals goals)
         {
             try
@@ -112,12 +122,17 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region Delete
+        /// <summary>
+        /// Function responsable for delete localhost
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         bool IGoalsService.Delete(Guid id)
         {
             try
             {
                 bool result = false;
-                if(id == Guid.Empty)
+                if (id == Guid.Empty)
                 {
                     throw new NullReferenceException("Meta não em contrada");
                 }
@@ -125,6 +140,193 @@ namespace AppFinancialControl.Service
                 {
                     _db.GetCollection<Goals>().Delete(id);
                     result = true;
+                }
+
+                return result;
+            }
+            catch (NullReferenceException nre)
+            {
+                throw nre;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region GetUserIdAPI
+        /// <summary>
+        /// Method responsable for Get the goals in database Postgree
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<ObservableCollection<Goals>> GetUserIdAPI(Guid userId)
+        {
+            try
+            {
+                if (userId == Guid.Empty)
+                {
+                    throw new NullReferenceException("Usuário não edentificado");
+                }
+                else
+                {
+                    ObservableCollection<Goals> ObsControllerGoals = null;
+                    HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                    HttpResponseMessage response = await client.GetAsync($"Goals/GetId/{userId}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ObsControllerGoals = JsonConvert.DeserializeObject<ObservableCollection<Goals>>(await response.Content.ReadAsStringAsync())
+                            ?? throw new ArgumentNullException("Nenhuma meta encontrada");
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        throw new NullReferenceException(await response.Content.ReadAsStringAsync());
+                    }
+                    else if (response.StatusCode is HttpStatusCode.BadRequest)
+                    {
+                        throw new Exception(await response.Content.ReadAsStringAsync());
+                    }
+                    return ObsControllerGoals;
+                }
+            }
+            catch (ArgumentNullException ane)
+            {
+                throw ane;
+            }
+            catch (NullReferenceException nre)
+            {
+                throw nre;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region PostAPI
+        /// <summary>
+        /// Method resposable for inset Goals in database Postgree
+        /// </summary>
+        /// <param name="goals"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
+        public async Task<Boolean> PostAPI(Goals goals)
+        {
+            try
+            {
+                if (goals == null)
+                {
+                    throw new NullReferenceException("Por favor preencha todos os campos");
+                }
+                else
+                {
+                    bool result = false;
+                    HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                    HttpResponseMessage response = await client.PostAsJsonAsync("Goals/Insert", goals);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        result = JsonConvert.DeserializeObject<Boolean>(await response.Content.ReadAsStringAsync());
+                    }
+                    else if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        throw new NullReferenceException(await response.Content.ReadAsStringAsync());
+                    }
+                    else if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        throw new Exception(await response.Content.ReadAsStringAsync());
+                    }
+
+                    return result;
+                }
+            }
+            catch(NullReferenceException nre)
+            {
+                throw nre;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region UpdateAPI
+        /// <summary>
+        /// Method resposable for update Goals in database Postgree
+        /// </summary>
+        /// <param name="goals"></param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
+        public async Task<Boolean> UpdateAPI(Goals goals)
+        {
+            try
+            {
+                if (goals == null)
+                {
+                    throw new NullReferenceException("Por favor preencha todos os campos");
+                }
+                else
+                {
+                    bool result = false;
+                    HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                    HttpResponseMessage response = await client.PutAsJsonAsync("Goals/Update", goals);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        result = JsonConvert.DeserializeObject<Boolean>(await response.Content.ReadAsStringAsync());
+                    }
+                    else if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        throw new NullReferenceException(await response.Content.ReadAsStringAsync());
+                    }
+                    else if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        throw new Exception(await response.Content.ReadAsStringAsync());
+                    }
+
+                    return result;
+                }
+            }
+            catch (NullReferenceException nre)
+            {
+                throw nre;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region DeleteAPI
+        /// <summary>
+        /// Function responsable for Delete Goals in localhost
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<Boolean> DeleteAPI(Guid id)
+        {
+            try
+            {
+                bool result = false;
+                HttpClient client = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await client.DeleteAsync($"Goals/Delete/{id}");
+
+                if(response.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new NullReferenceException(await response.Content.ReadAsStringAsync());
+                }
+                else if(response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new Exception(await response.Content.ReadAsStringAsync());
                 }
 
                 return result;
