@@ -44,12 +44,12 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region GetDate
-        public ObservableCollection<Transaction> GetDate(DateTime startDate, DateTime endDate)
+        public ObservableCollection<Transaction> GetDate(Guid userId, DateOnly startDate, DateOnly endDate)
         {
             try
             {
                 List<Transaction> listTransation = _db.GetCollection<Transaction>(_collectionName).Query()
-                    .Where(i => i.Date.Date == startDate.Date.Date && i.Date.Date == endDate.Date.Date).ToList()
+                    .Where(i => i.Date == startDate && i.Date == endDate).ToList()
                     ?? throw new ArgumentNullException("Nenhuma transação encontrada");
 
                 ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
@@ -158,17 +158,21 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region GetDate
-        public static async Task<ObservableCollection<Transaction>> GetDateAPI(DateTime startDate, DateTime endDate)
+        public static async Task<ObservableCollection<Transaction>> GetDateAPI(Guid userId, DateOnly startDate, DateOnly endDate)
         {
             try
             {
                 ObservableCollection<Transaction> trancations = null;
                 HttpClient client = ConnectionLocalhost.ConnectionAPI();
-                HttpResponseMessage response = await client.GetAsync($"Transaction/GetDate?startDate={startDate}&endDate{endDate}");
+                HttpResponseMessage response = await client.GetAsync($"Transaction/GetDate/{userId}?startDate={startDate}&endDate{endDate}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     trancations = JsonConvert.DeserializeObject<ObservableCollection<Transaction>>(await response.Content.ReadAsStringAsync());
+                }
+                else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    throw new NullReferenceException(await response.Content.ReadAsStringAsync());
                 }
 
                 return trancations;
@@ -181,7 +185,7 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region InsertAPI
-        public async Task<String> InsertAPI(Transaction transaction)
+        public static async Task<String> InsertAPI(Transaction transaction)
         {
             try
             {
