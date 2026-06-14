@@ -1,9 +1,10 @@
 ﻿using AppFinancialControl.Service;
 using AppFinancialControl.View;
 using LiteDB;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Security.Cryptography.X509Certificates;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace AppFinancialControl
 {
@@ -15,6 +16,8 @@ namespace AppFinancialControl
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseSkiaSharp()
+                .UseLiveCharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -23,9 +26,9 @@ namespace AppFinancialControl
                 .RegisterDatabaseAndRepository()
                 .RegisterViews();
 
-            #if DEBUG
-    		builder.Logging.AddDebug();
-            #endif
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
 
             using var stream = FileSystem.OpenAppPackageFileAsync("appsettings.json").GetAwaiter().GetResult();
 
@@ -76,6 +79,8 @@ namespace AppFinancialControl
                 mauiAppBuilder.Services.AddTransient<InsertClient>();
                 mauiAppBuilder.Services.AddTransient<InsertUser>();
                 mauiAppBuilder.Services.AddTransient<GoalsList>();
+                mauiAppBuilder.Services.AddTransient<ExtractList>();
+                mauiAppBuilder.Services.AddTransient<AppShell>();
 
                 return mauiAppBuilder;
             }
