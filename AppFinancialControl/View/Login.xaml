@@ -6,10 +6,7 @@
 
     <ContentPage.Resources>
         <Style TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#262626"/>
             <Setter Property="TextColor" Value="White"/>
-            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
-            
         </Style>
     </ContentPage.Resources>
 
