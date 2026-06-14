@@ -32,7 +32,7 @@ public partial class TransactionEdit : ContentPage
             }
 
             etName.Text = _transaction.Name;
-            dpDate.Date = _transaction.Date.Date;
+            dpDate.Date = DateTime.Parse(_transaction.Date.ToString());
             etValue.Text = _transaction.Value.ToString("C");
         }
         catch (Exception ex)
@@ -65,7 +65,7 @@ public partial class TransactionEdit : ContentPage
                 Id = _transaction.Id,
                 Name = etName.Text ?? throw new ArgumentNullException("Nome é um campo necessário"),
                 Type = rbExpense.IsChecked == true ? TransactionType.Expenses : TransactionType.Income,
-                Date = dpDate.Date ?? throw new ArgumentNullException("Data é um campo necessário"),
+                Date = DateOnly.Parse(dpDate.Date.ToString() ?? throw new ArgumentNullException("Data é um campo necessário")),
                 Value = Math.Abs(float.Parse(etValue.Text.Replace("R$", "") ?? throw new ArgumentNullException("Valor é um campo necessário"))),
             };
 

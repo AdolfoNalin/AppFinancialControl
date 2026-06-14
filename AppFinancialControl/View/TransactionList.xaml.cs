@@ -27,11 +27,11 @@ public partial class TransactionList : ContentPage
     }
 
     #region UpdateData
-    private void UpdateData()
+    private async void UpdateData()
     {
         try
         {
-            ObservableCollection<Transaction> list = _service.GetAll(UserSession.Id) ?? 
+            ObservableCollection<Transaction> list = await TransactionService.GetAllAPI(UserSession.Id) ?? 
                 throw new ArgumentNullException("Nenhuma Despesa ou Saldo cadastrado");
 
             float income = list.Where(b => b.Type == TransactionType.Income)
