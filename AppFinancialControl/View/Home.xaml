@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppFinancialControl.View.Home"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             Title="Home">
+
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#262626"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+
+        <Style TargetType="Border">
+            <Setter Property="BackgroundColor" Value="#262626"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="StrokeShape" Value="12"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+
+        <Border>
+            <Label
+            HorizontalOptions="Center"
+            Text="Home"/>
+        </Border>
+        <ScrollView>
+            
+        
+        <Grid
+            RowDefinitions="Auto,Auto, Auto, Auto">
+
+            <Border
+                Padding="10"
+                Margin="10"
+                Grid.Row="0"
+                Grid.Column="0">
+
+                <Grid
+                    ColumnSpacing="60"
+                    ColumnDefinitions="Auto, Auto, Auto"
+                    RowDefinitions="Auto, Auto, Auto">
+
+                    <Label
+                        HorizontalOptions="Start"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Dados Gerais"/>
+
+                    <Image
+                        HorizontalOptions="Center"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Source="bolsa_dinheiro.png"/>
+
+                    <Label
+                        HorizontalOptions="Center"
+                        x:Name="lblBalance"
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Text="Saldo "/>
+
+                    <Image
+                        HorizontalOptions="Center"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Source="receita.png"/>
+
+                    <Label
+                        HorizontalOptions="Center"
+                        x:Name="lblExpenses"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Text="Receita "/>
+
+                    <Image
+                        HorizontalOptions="Center"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        Source="gastar.png"/>
+
+                    <Label
+                        HorizontalOptions="Center"
+                        x:Name="lblInconse"
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        Text="Gastos "/>
+                </Grid>
+            </Border>
+
+            <Border
+                Grid.Row="1">
+                <Grid
+                    Padding="5"
+                    Margin="1"
+                    ColumnDefinitions="Auto, Auto, Auto">
+
+                    <Label 
+                        Text="Resumo"/>
+
+                    <lvc:PieChart
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        x:Name="charts"
+                        BackgroundColor="Transparent"
+                        Series="{Binding Series}"
+                        HeightRequest="120"
+                        WidthRequest="120"/>
+                   
+                    <Grid
+                        Margin="5"
+                        Padding="5"
+                        Grid.Column="1"
+                        RowDefinitions="Auto, Auto, Auto"
+                        ColumnDefinitions="Auto, Auto">
+                        
+                        <Label
+                            x:Name="sylblBalance"
+                            Grid.Column="1"
+                            Text="Saldo: "/>
+                        
+                        <Label
+                            x:Name="sylblInconse"
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Text="Receita: "/>
+                        
+                        <Label
+                            x:Name="sylblExpenses"
+                            Grid.Column="1"
+                            Grid.Row="2"
+                            Text="Despesas: "/>
+                    </Grid>
+
+                </Grid>
+                
+            </Border>
+
+            <Border
+                Grid.Row="2">
+
+                    <Grid
+                        ColumnDefinitions="*, Auto"
+                        RowDefinitions="Auto">
+
+                        <Label  
+                             Text="Transações Recente"/>
+                        <ScrollView>
+                            <CollectionView
+                                x:Name="cvTransaction">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid 
+                                            Padding="15"
+                                            RowDefinitions="Auto"
+                                            ColumnDefinitions="50, *, Auto">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                    CommandParameter="{Binding .}"
+                                                    Tapped="OpenScreenEdit">
+
+                                                </TapGestureRecognizer>
+                                            </Grid.GestureRecognizers>
+
+                                            <Border 
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                StrokeShape="RoundRectangle 20">
+
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer 
+                                                        Tapped="Delete_Tapped"
+                                                        CommandParameter="{Binding .}">
+                                                    </TapGestureRecognizer>
+                                                </Border.GestureRecognizers>
+
+                                                <Label 
+                                                    Text="{Binding Name, Converter={StaticResource TransactionNameConverter}}"
+                                                    Margin="10"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"
+                                                    FontSize="15"/>
+
+                                            </Border>
+
+                                            <VerticalStackLayout Grid.Column="1">
+                                                <Label
+                                                    Text="{Binding Name}"/>
+                                                <Label 
+                                                    Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
+
+                                            </VerticalStackLayout>
+                                            <Label 
+                                                Text="{Binding ., Converter={StaticResource TransactionValueConverter}}"
+                                                TextColor="{Binding ., Converter={StaticResource TransactionValueColorConvert}}"
+                                                VerticalOptions="Center"
+                                                Grid.Column="2"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+
+                        <ImageButton
+                              HorizontalOptions="End"
+                              Grid.Row="0"
+                              WidthRequest="30"
+                              HeightRequest="30"
+                              Grid.Column="1"
+                              BackgroundColor="Transparent"
+                              Source="mais.png"
+                              Clicked="ImagemClicked_NewTransaction"/>    
+                    </Grid>
+                </Border>
+
+            <Border
+                Grid.Row="3">
+                <Label
+                    Text="Metas"/>
+            </Border>
+        </Grid>
+        </ScrollView>
+    </VerticalStackLayout>
+
+</ContentPage>
