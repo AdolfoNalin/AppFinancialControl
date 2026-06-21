@@ -1,25 +1,11 @@
 using AppFinancialControl.Models;
 using AppFinancialControl.Service;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
 using System.Collections.ObjectModel;
 
 namespace AppFinancialControl.View;
 
 public partial class Home : ContentPage
 {
-    public ISeries[] Series { get; set; } =
-       {
-            new PieSeries<double>
-            {
-                Values = new double[] { 50 }
-            },
-            new PieSeries<double>
-            {
-                Values = new double[] { 20 }
-            }
-        };
-
     public Home()
     {
 		InitializeComponent();
@@ -62,15 +48,33 @@ public partial class Home : ContentPage
     #endregion
 
     #region ImagemClicked_NewTransaction
-    private void ImagemClicked_NewTransaction(object sender, EventArgs e)
+    private async void ImagemClicked_NewTransaction(object sender, EventArgs e)
     {
         try
         {
+            TransactionAdd screen = this.Handler.MauiContext.Services.GetService<TransactionAdd>()
+                ?? throw new ArgumentNullException("Contexto MAUI está nulo");
 
+            Navigation.PushAsync(screen);
         }
         catch (Exception ex)
         {
             throw ex;
+        }
+    }
+    #endregion
+
+    #region ImagemClicked_NewGoals
+    private void ImagemClicked_NewGoals(object sender, EventArgs e)
+    {
+        try
+        {
+            GoalsAdd screen = this.Handler.MauiContext.Services.GetService<GoalsAdd>() 
+                ?? throw new ArgumentNullException("Context Maui Is null");
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Erro", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "Fechar");
         }
     }
     #endregion
