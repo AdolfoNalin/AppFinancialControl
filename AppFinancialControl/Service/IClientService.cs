@@ -6,8 +6,8 @@ namespace AppFinancialControl.Service
     public interface IClientService
     {
         ObservableCollection<Client> GetAll();
-        Task<String> Add(Client client);
-        Boolean Update(Client client);
-        Boolean Delete(Client client);
+        string Add(Client client);
+        string Update(Client client);
+        string Delete(Client client);
     }
 }

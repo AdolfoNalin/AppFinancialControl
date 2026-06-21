@@ -23,7 +23,7 @@ namespace AppFinancialControl.Service
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public async Task<string> Add(Client client)
+        public string Add(Client client)
         {
             try
             {
@@ -35,14 +35,8 @@ namespace AppFinancialControl.Service
                 {
                     ClientSession.Id = client.Id;
                     _db.GetCollection<Client>(_colectionName).Insert(client);
-                    if (await InsertAPI(client))
-                    {
-                        return "Certo, Vamos para a segunda etapa";
-                    }
-                    else
-                    {
-                        return "Algo deu errado";
-                    }
+
+                    return $"Cliente foi cadastrado com sucesso";
                 }
             }
             catch (Exception ex)
@@ -53,11 +47,10 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region Delete
-        public Boolean Delete(Client client)
+        public string Delete(Client client)
         {
             try
             {
-                bool result = false;
                 if (client == null)
                 {
                     throw new ArgumentNullException("Cliente é nulo");
@@ -65,10 +58,8 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<Client>(_colectionName).Delete(client.Id);
-                    result = true;
+                    return $"Cliente foi deletado com sucesso";
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
@@ -103,11 +94,10 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region Update
-        public Boolean Update(Client client)
+        public string Update(Client client)
         {
             try
             {
-                bool result = false;
                 if (client == null)
                 {
                     throw new ArgumentNullException("Cliente é nulo");
@@ -115,10 +105,8 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<Client>(_colectionName).Update(client);
-                    result = true;
+                    return "Cliente foi atualizado com sucesso";
                 }
-
-                return result;
             }
             catch (ArgumentNullException ane)
             {
@@ -165,18 +153,11 @@ namespace AppFinancialControl.Service
         {
             try
             {
-                if (Delete(client))
-                {
-                    HttpClient htppClient = ConnectionLocalhost.ConnectionAPI();
-                    HttpResponseMessage response = await htppClient.DeleteAsync($"Client/Delete/{client.Id}");
+                HttpClient htppClient = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await htppClient.DeleteAsync($"Client/Delete/{client.Id}");
 
-                    string message = await response.Content.ReadAsStringAsync();
-                    return message;
-                }
-                else
-                {
-                    throw new LiteException(404, "Cleinte não foi deletado");
-                }
+                string message = await response.Content.ReadAsStringAsync();
+                return message;
 
             }
             catch (Exception ex)
@@ -191,8 +172,7 @@ namespace AppFinancialControl.Service
         {
             try
             {
-                ObservableCollection<Client> getLocalhost = GetAll();
-                if (getLocalhost.Count > 0)
+                if (true)
                 {
                     ObservableCollection<Client> getAPI = new ObservableCollection<Client>();
                     HttpClient client = ConnectionLocalhost.ConnectionAPI();
@@ -202,16 +182,12 @@ namespace AppFinancialControl.Service
                     {
                         getAPI = JsonConvert.DeserializeObject<ObservableCollection<Client>>(await response.Content.ReadAsStringAsync())
                             ?? throw new ArgumentNullException();
-
-                        if (getAPI.Count != getLocalhost.Count)
+                        
+                        if (true)
                         {
                             throw new ArgumentException("Sem conexão com a internet");
                         }
-                        else
-                        {
-                            getAPI.Clear();
-                            return getLocalhost;
-                        }
+                        
                     }
                     else
                     {
@@ -240,20 +216,12 @@ namespace AppFinancialControl.Service
         {
             try
             {
-                if (Update(client))
-                {
-                    HttpClient httpClient = ConnectionLocalhost.ConnectionAPI();
-                    HttpResponseMessage response = await httpClient.PutAsJsonAsync($"{_colectionName}/Update", client);
+                HttpClient httpClient = ConnectionLocalhost.ConnectionAPI();
+                HttpResponseMessage response = await httpClient.PutAsJsonAsync($"{_colectionName}/Update", client);
 
-                    string message = await response.Content.ReadAsStringAsync();
+                string message = await response.Content.ReadAsStringAsync();
 
-                    return message;
-                }
-                else
-                {
-                    throw new Exception("Não foi possivél realizar a atualização");
-                }
-
+                return message;
             }
             catch (Exception ex)
             {
