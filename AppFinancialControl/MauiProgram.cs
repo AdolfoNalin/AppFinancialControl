@@ -79,6 +79,7 @@ namespace AppFinancialControl
                 mauiAppBuilder.Services.AddTransient<InsertClient>();
                 mauiAppBuilder.Services.AddTransient<InsertUser>();
                 mauiAppBuilder.Services.AddTransient<GoalsList>();
+                mauiAppBuilder.Services.AddTransient<GoalsAdd>();
                 mauiAppBuilder.Services.AddTransient<ExtractList>();
                 mauiAppBuilder.Services.AddTransient<AppShell>();
 
