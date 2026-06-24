@@ -1,5 +1,3 @@
-using AppFinancialControl.View;
-
 namespace AppFinancialControl;
 
 public partial class AppShell : Shell
@@ -8,9 +6,9 @@ public partial class AppShell : Shell
 	{
         InitializeComponent();
 
-        //Dispatcher.Dispatch(async () =>
-        //{
-        //    await Shell.Current.GoToAsync("//home");x
-        //});
+        Dispatcher.Dispatch(async () =>
+        {
+            await Shell.Current.GoToAsync("//home"); 
+        });
     }
 }
