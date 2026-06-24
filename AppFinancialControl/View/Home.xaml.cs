@@ -6,8 +6,10 @@ namespace AppFinancialControl.View;
 
 public partial class Home : ContentPage
 {
-    public Home()
+    private readonly ITransactionService _servie;
+    public Home(ITransactionService service)
     {
+        _servie = service;
 		InitializeComponent();
         UpdateData();
         charts.Series = Summary.GetSeries();
@@ -21,12 +23,12 @@ public partial class Home : ContentPage
     {
         try
         {
-            ObservableCollection<Transaction> transactions = await TransactionService.GetAllAPI(UserSession.Id)
+            ObservableCollection<Transaction> transactions = _servie.GetAll(UserSession.Id)
                 ?? throw new NullReferenceException("Nenhuma transação encontrada");
             Double.TryParse(transactions.Where(t => t.Type == TransactionType.Income).Sum(t => t.Value).ToString(), out double income);
             Double.TryParse(transactions.Where(t => t.Type == TransactionType.Expenses).Sum(t => t.Value).ToString(), out double expenses);
             
-            double balance = expenses - income;
+            double balance = income - expenses;
 
             lblExpenses.Text += $"\n{expenses.ToString("C")}";
             lblInconse.Text += $"\n{income.ToString("C")}";

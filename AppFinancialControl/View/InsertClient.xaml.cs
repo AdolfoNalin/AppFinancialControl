@@ -29,12 +29,12 @@ public partial class InsertClient : ContentPage
                 Salary = Decimal.Parse(txtSalaryClient.Text)
             };
 
-            string message = await _service.Add(client);
+            string message = _service.Add(client);
 
             DisplayAlert("Deu certo", message, "Fechar");
 
             InsertUser insertUser = this.Handler.MauiContext.Services.GetService<InsertUser>();
-            Navigation.PushAsync(insertUser);
+            await Navigation.PushModalAsync(insertUser);
         }
         catch (Exception ex)
         {

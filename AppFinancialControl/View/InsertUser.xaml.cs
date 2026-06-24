@@ -43,7 +43,7 @@ public partial class InsertUser : ContentPage
                 };
 
                 Login login = this.Handler.MauiContext.Services.GetService<Login>();
-                Navigation.PushAsync(login);
+                Navigation.PushModalAsync(login);
             }
             else
             {

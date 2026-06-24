@@ -25,9 +25,9 @@ public partial class ExtractList : ContentPage
     {
         try
         {
-            DateOnly dateNow = DateOnly.Parse(DateTime.Now.Date.Date.ToString("D"));
+            DateOnly dateNow = DateOnly.Parse(DateTime.Now.Date.ToString("D"));
 
-            ObservableCollection<Transaction> transactions = _service.GetDate(UserSession.Id, dateNow, dateNow)
+            ObservableCollection<Transaction> transactions = _service.GetAll(UserSession.Id)
                 ?? throw new NullReferenceException("Nenhuma transação realizada neste perildo de tempo");
 
 
@@ -43,7 +43,7 @@ public partial class ExtractList : ContentPage
             lblIncome.Text = income.ToString("C");
             lblExpense.Text = expensse.ToString("C");
 
-            cvExtract.BindingContext = transactions;
+            cvExtract.ItemsSource = transactions;
         }
         catch(NullReferenceException nre)
         {

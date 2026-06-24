@@ -16,11 +16,11 @@ public partial class TransactionAdd : ContentPage
     }
 
     #region TapGestureRecognizer_Tapped
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         try
         {
-            Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
         catch (Exception ex)
         {
@@ -45,7 +45,7 @@ public partial class TransactionAdd : ContentPage
                 Type = rbEntry.IsChecked == true ? TransactionType.Income : TransactionType.Expenses,
             };
 
-            TransactionService.InsertAPI(transaction);
+            _service.Add(transaction);
 
             DisplayAlert("Aceito", "Transição salva", "ok");
 

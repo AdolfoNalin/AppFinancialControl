@@ -1,5 +1,6 @@
 using AppFinancialControl.Models;
 using AppFinancialControl.Service;
+using Plugin.FirebaseAuth;
 
 namespace AppFinancialControl.View;
 
@@ -11,7 +12,21 @@ public partial class Login : ContentPage
 	{
 		InitializeComponent();
         _service = userService;
+        Validation();
 	}
+
+    private async void Validation()
+    {
+        try
+        {
+            await SecureStorage.Default.SetAsync("Login", UserSession.Login);
+            Application.Current.MainPage = new AppShell();
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
     #region Button_clicked_Login
     /// <summary>
     /// Button event Login
@@ -133,7 +148,7 @@ public partial class Login : ContentPage
         try
         {
             InsertClient client = this.Handler.MauiContext.Services.GetService<InsertClient>();
-            Navigation.PushAsync(client);
+            Navigation.PushModalAsync(client);
         }
         catch (Exception ex)
         {

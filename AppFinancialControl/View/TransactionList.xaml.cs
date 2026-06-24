@@ -31,7 +31,7 @@ public partial class TransactionList : ContentPage
     {
         try
         {
-            ObservableCollection<Transaction> list = await TransactionService.GetAllAPI(UserSession.Id) ?? 
+            ObservableCollection<Transaction> list = _service.GetAll(UserSession.Id) ?? 
                 throw new ArgumentNullException("Nenhuma Despesa ou Saldo cadastrado");
 
             float income = list.Where(b => b.Type == TransactionType.Income)

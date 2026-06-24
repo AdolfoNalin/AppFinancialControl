@@ -63,9 +63,10 @@ public partial class TransactionEdit : ContentPage
             Transaction transaction = new Transaction()
             {
                 Id = _transaction.Id,
+                UserId = UserSession.Id,
                 Name = etName.Text ?? throw new ArgumentNullException("Nome é um campo necessário"),
                 Type = rbExpense.IsChecked == true ? TransactionType.Expenses : TransactionType.Income,
-                Date = DateOnly.Parse(dpDate.Date.ToString() ?? throw new ArgumentNullException("Data é um campo necessário")),
+                Date = DateOnly.Parse(dpDate.Date.Value.Date.ToString("D")?? throw new NullReferenceException("O campo data é obrigatório")),
                 Value = Math.Abs(float.Parse(etValue.Text.Replace("R$", "") ?? throw new ArgumentNullException("Valor é um campo necessário"))),
             };
 
