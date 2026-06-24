@@ -62,11 +62,10 @@ namespace AppFinancialControl.Service
         /// <param name="goals"></param>
         /// <returns></returns>
         /// <exception cref="NullReferenceException"></exception>
-        bool IGoalsService.Insert(Goals goals)
+        String IGoalsService.Insert(Goals goals)
         {
             try
             {
-                bool result = false;
                 if (goals == null)
                 {
                     throw new NullReferenceException("Preencha todos os campos");
@@ -74,10 +73,8 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<Goals>(_name).Insert(goals);
-                    result = true;
+                    return "Meta foi cadastrada com Sucesso";
                 }
-
-                return result;
             }
             catch (NullReferenceException nre)
             {
@@ -97,11 +94,10 @@ namespace AppFinancialControl.Service
         /// <param name="goals"></param>
         /// <returns></returns>
         /// <exception cref="NullReferenceException"></exception>
-        bool IGoalsService.Update(Goals goals)
+        String IGoalsService.Update(Goals goals)
         {
             try
             {
-                bool result = false;
                 if (goals == null)
                 {
                     throw new NullReferenceException("Preencha todos os campos");
@@ -109,10 +105,8 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<Goals>().Update(goals);
-                    result = true;
+                    return "Meta foi cadastrada com sucesso";
                 }
-
-                return result;
             }
             catch (Exception ex)
             {
@@ -127,11 +121,10 @@ namespace AppFinancialControl.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        bool IGoalsService.Delete(Guid id)
+        String IGoalsService.Delete(Guid id)
         {
             try
             {
-                bool result = false;
                 if (id == Guid.Empty)
                 {
                     throw new NullReferenceException("Meta não em contrada");
@@ -139,10 +132,9 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<Goals>().Delete(id);
-                    result = true;
+                    return "Meta foi deletada com sucesso";
                 }
 
-                return result;
             }
             catch (NullReferenceException nre)
             {

@@ -71,18 +71,10 @@ namespace AppFinancialControl.Service
                 }
                 else
                 {
-                    User userResponse = await LoginAPI(user);
-                    if (userResponse.Login.Contains(user.Login))
-                    {
-                        return userResponse;
-                    }
-                    else
-                    {
-                        return userLogin;
-                    }
+                    return userLogin;
                 }
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
                 throw nre;
             }
@@ -118,14 +110,7 @@ namespace AppFinancialControl.Service
                 {
                     user.ClientId = ClientSession.Id;
                     _db.GetCollection<User>(_collectionName).Insert(user);
-                    if (await InsertAPI(user))
-                    {
-                        return "Usuário cadastrado com sucesso";
-                    }
-                    else
-                    {
-                        return "Usuário cadastrado localmente";
-                    }
+                    return "Usuário cadastrado com sucesso";
                 }
             }
             catch (ArgumentNullException ane)
@@ -155,7 +140,6 @@ namespace AppFinancialControl.Service
                 else
                 {
                     _db.GetCollection<User>(_collectionName).Update(user);
-                    await UpdateAPI(user);
 
                     return "Usuário atualizado com sucesso";
                 }
@@ -219,12 +203,12 @@ namespace AppFinancialControl.Service
                 {
                     userResponse = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
                 }
-                else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
                     string message = await response.Content.ReadAsStringAsync();
                     throw new NullReferenceException(message);
                 }
-                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     string message = await response.Content.ReadAsStringAsync();
                     throw new ArgumentNullException(message);
@@ -237,11 +221,11 @@ namespace AppFinancialControl.Service
 
                 return userResponse;
             }
-            catch(ArgumentNullException ane)
+            catch (ArgumentNullException ane)
             {
                 throw ane;
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
                 throw nre;
             }

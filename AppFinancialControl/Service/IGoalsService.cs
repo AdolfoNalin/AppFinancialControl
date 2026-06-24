@@ -6,8 +6,8 @@ namespace AppFinancialControl.Service
     public interface IGoalsService
     {
         public ObservableCollection<Goals> GetUserId(Guid userId);
-        public Boolean Insert(Goals goals);
-        public Boolean Update(Goals goals);
-        public Boolean Delete(Guid id);
+        public String Insert(Goals goals);
+        public String Update(Goals goals);
+        public String Delete(Guid id);
     }
 }
