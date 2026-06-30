@@ -16,6 +16,32 @@ namespace AppFinancialControl.Service
             _db = database;
         }
 
+        #region GetUser
+        /// <summary>
+        /// Method responsable for search the user in data base
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public User GetUser(Guid id)
+        {
+            try
+            {
+                User user = _db.GetCollection<User>().Query().Where(u => u.Id == id).FirstOrDefault()
+                    ?? throw new NullReferenceException();
+
+                return user;
+            }
+            catch (NullReferenceException nre)
+            {
+                throw nre;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
         #region Delete
         /// <summary>
         /// Método responsável por deletar o usuário
