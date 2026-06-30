@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppFinancialControl.View.GoalsEdit"
+             Title="GoalsEdit">
+        
+    <VerticalStackLayout>
+        <Border
+             BackgroundColor="Black"
+             Margin="10"
+             Padding="10"
+             StrokeShape="12">
+            <Grid 
+                 RowDefinitions="Auto"
+                 ColumnDefinitions="*, 30">
+
+                <Label
+                     Text="Atualizar"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center"
+                     Grid.Row="0"
+                     Grid.Column="0"/>
+
+                <Image
+                     Source="close.png"
+                     HorizontalOptions="Center"
+                     Grid.Row="0"
+                     Grid.Column="1"
+                     WidthRequest="17">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Tapped="TapGestureRecognizer_Tapped"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </Border>
+
+        <Grid
+         RowSpacing="20"
+         Margin="10"
+         Padding="10"
+         RowDefinitions="Auto, Auto, Auto, Auto">
+
+            <Entry
+                 Text="Titulo"
+                 Grid.Row="0"
+                 x:Name="txtTitle"/>
+
+            <DatePicker
+                 Grid.Row='1'
+                 x:Name="dpDate"/>
+
+            <Entry
+                 Text="Descrição"
+                 Grid.Row="2"
+                 x:Name="txtDescription"/>
+
+            <Entry
+                 Text="Valor"
+                Grid.Row="3"
+                x:Name="txtValue"/>
+
+        </Grid>
+
+        <Button
+             Margin="100"
+             Text="Salvar"
+             HorizontalOptions="Center"
+             Clicked="Button_Clicked_SaveGoals"/>
+    </VerticalStackLayout>
+</ContentPage>
