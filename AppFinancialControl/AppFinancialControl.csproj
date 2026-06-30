@@ -131,6 +131,9 @@
 	  <MauiXaml Update="View\GoalsAdd.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\GoalsEdit.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Home.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
