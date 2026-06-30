@@ -35,7 +35,7 @@ namespace AppFinancialControl.Service
                 //else
                 //{
                 ObservableCollection<Goals> observableGoals = new ObservableCollection<Goals>();
-                List<Goals> list = _db.GetCollection<Goals>(_name).Query().OrderBy(g => g.Date).ToList();
+                List<Goals> list = _db.GetCollection<Goals>(_name).Query().Where(g => g.UserId == userId).OrderBy(g => g.Date).ToList();
                 list.ForEach(g =>
                 {
                     observableGoals.Add(g);
