@@ -51,11 +51,6 @@
                  x:Name="dpDate"/>
 
             <Entry
-                 Text="Descrição"
-                 Grid.Row="2"
-                 x:Name="txtDescription"/>
-
-            <Entry
                  Text="Valor"
                 Grid.Row="3"
                 x:Name="txtValue"/>

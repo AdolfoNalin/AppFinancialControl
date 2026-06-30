@@ -28,7 +28,6 @@ public partial class GoalsAdd : ContentPage
             {
                 UserId = UserSession.Id,
                 Title = txtTitle.Text ?? throw new ArgumentNullException("O Titulo é obrigatório"),
-                Description = txtDescription.Text ?? throw new ArgumentNullException("A descrição é obrigatório"),
                 Date = DateTime.Parse(dpDate.Date.Value.Date.ToString("D") ?? throw new ArgumentNullException("É necessário a data")),
                 Value = float.Parse(txtValue.Text)
             };
