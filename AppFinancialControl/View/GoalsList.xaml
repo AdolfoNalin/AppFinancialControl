@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppFinancialControl.View.GoalsList"
              Title="InsertGoals"
+             xmlns:converters="clr-namespace:AppFinancialControl.Libraries.Converters"
              NavigationPage.HasNavigationBar="False">
 
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:GoalsNameConverter x:Key = "GoalsNameConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <Grid
         RowDefinitions="Auto, *, Auto, Auto">
 
@@ -31,11 +38,64 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid
+                                ColumnSpacing="10"
                                 Padding="10"
-                                RowDefinitions="*, Auto"
-                                ColumnDefinitions="50, *, Auto">
+                                RowDefinitions="Auto, *"
+                                ColumnDefinitions="50, Auto, Auto">
 
-                            </Grid>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    StrokeShape="20">
+                                    <Label
+                                        Margin="10"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="15"
+                                        TextColor="White"
+                                        Text="{Binding Titel, Converter= {StaticResource GoalsNameConverter}}"/>
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Tapped="Tapped_Delete_Goals"
+                                            CommandParameter="{Binding .}">
+                                            
+                                        </TapGestureRecognizer>
+                                    </Border.GestureRecognizers>
+                                </Border>
+                                    <VerticalStackLayout
+                                        Grid.Column="1">
+
+                                    <Label 
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Text="{Binding Title}"/>
+
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="3"
+                                        HorizontalOptions="End"
+                                        Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
+
+                                    
+                                </VerticalStackLayout>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    HorizontalOptions="End"
+                                    Text="{Binding Value, StringFormat='{}{0:C2}'}"/>
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        CommandParameter="{Binding .}"
+                                        Tapped="Tapped_Update_Goals">
+                                        
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                        </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
