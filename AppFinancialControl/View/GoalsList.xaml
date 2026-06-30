@@ -12,19 +12,33 @@
             <converters:GoalsNameConverter x:Key = "GoalsNameConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <Grid
-        RowDefinitions="Auto, *, Auto, Auto">
 
+    <Grid
+       RowDefinitions="Auto, *, Auto, Auto">
         <Border
             Padding="10"
             Margin="10"
             HorizontalOptions="FillAndExpand"
             StrokeShape="12"
             BackgroundColor="#272727">
+
+            <Grid>
+                
             <Label
+                VerticalOptions="Center"
+                Grid.Column="1"
                 HorizontalOptions="Center"
                 Text="Metas"/>
+
+            <Button
+                HorizontalOptions="End"
+                Grid.Column="2"
+                Text="+"
+                FontSize="30"
+                Clicked="ButtonClicked_NewGoals"/>
+
+            </Grid>
+
         </Border>
 
         <Grid
@@ -61,11 +75,11 @@
                                         <TapGestureRecognizer
                                             Tapped="Tapped_Delete_Goals"
                                             CommandParameter="{Binding .}">
-                                            
+
                                         </TapGestureRecognizer>
                                     </Border.GestureRecognizers>
                                 </Border>
-                                    <VerticalStackLayout
+                                <VerticalStackLayout
                                         Grid.Column="1">
 
                                     <Label 
@@ -79,7 +93,7 @@
                                         HorizontalOptions="End"
                                         Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
 
-                                    
+
                                 </VerticalStackLayout>
 
                                 <Label
@@ -92,43 +106,14 @@
                                     <TapGestureRecognizer
                                         CommandParameter="{Binding .}"
                                         Tapped="Tapped_Update_Goals">
-                                        
+
                                     </TapGestureRecognizer>
                                 </Grid.GestureRecognizers>
-                        </Grid>
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </ScrollView>
         </Grid>
-
-
-        <Border
-            BackgroundColor="#272727"
-            Grid.Row="5"
-            StrokeShape="10"
-            Padding="6"
-            Margin="10">
-            <Grid
-                ColumnDefinitions="*, Auto"
-                RowDefinitions="Auto, Auto">
-                <Label
-                    Grid.Row="0"
-                    Text="Metas alcansadas: "/>
-                <ImageButton
-                    HorizontalOptions="End"
-                    Grid.Row="0"
-                    WidthRequest="30"
-                    HeightRequest="30"
-                    Grid.Column="1"
-                    BackgroundColor="Transparent"
-                    Source="mais.png"
-                    Clicked="ImagemClicked_NewGoals"/>
-                <Label
-                    Grid.Row="1"
-                    Text="Saldo Total: "/>
-            </Grid>
-
-        </Border>
     </Grid>
 </ContentPage>

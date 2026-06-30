@@ -22,7 +22,7 @@ public partial class GoalsList : ContentPage
 	}
 
     #region ImagemClicked_NewGoals
-    private void ImagemClicked_NewGoals(object sender, EventArgs e)
+    private void ButtonClicked_NewGoals(object sender, EventArgs e)
     {
         try
         {
