@@ -12,21 +12,8 @@ public partial class Login : ContentPage
 	{
 		InitializeComponent();
         _service = userService;
-        Validation();
 	}
 
-    private async void Validation()
-    {
-        try
-        {
-            await SecureStorage.Default.SetAsync("Login", UserSession.Login);
-            Application.Current.MainPage = new AppShell();
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
-    }
     #region Button_clicked_Login
     /// <summary>
     /// Button event Login
@@ -54,6 +41,7 @@ public partial class Login : ContentPage
                 UserSession.Password = user.Password;
                 UserSession.Token = user.Token;
 
+                await SecureStorage.SetAsync("userId", UserSession.Id.ToString());
                 Application.Current.MainPage = new AppShell();
             }
             else
