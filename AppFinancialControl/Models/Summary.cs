@@ -1,34 +1,58 @@
-﻿using LiveChartsCore;
+﻿using AppFinancialControl.Models;
+using AppFinancialControl.Service;
+using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 
 public class Summary
 {
-    public static ISeries[] Series { get; set; } =
-    [
-        new PieSeries<double>
-        {
-            Values = [10],
-            Name = "Alimentação"
-        },
+    private ITransactionService _service;
+    private double _expenses = 0;
+    private double _income = 0;
+    private double _balance = 0;
+    public ISeries[] Series { get; private set; }
+    public Summary(ITransactionService service)
+    {
+        _service = service;
+        GetTransaction();
+    }
 
-        new PieSeries<double>
-        {
-            Values = [25],
-            Name = "Transporte"
-        },
-
-        new PieSeries<double>
-        {
-            Values = [40],
-            Name = "Lazer"
-        }
-    ];
-
-    public static ISeries[] GetSeries()
+    private void GetTransaction()
     {
         try
         {
-            return Series;
+            _expenses = _service.GetAll(UserSession.Id).Where(t => t.Type == TransactionType.Expenses).Sum(t => t.Value);
+            _income = _service.GetAll(UserSession.Id).Where(t => t.Type == TransactionType.Income).Sum(t => t.Value);
+
+            _balance = _income - _expenses;
+
+            Series =
+            [
+                new PieSeries<double>
+                {
+                    Values = [_expenses],
+                    Name = "Gastos"
+                },
+
+                new PieSeries<double>
+                {
+                    Values = [_income],
+                    Name = "Receita"
+                },
+
+                new PieSeries<double>
+                {
+                    Values = [_balance],
+                    Name = "Saldo"
+                }
+            ];
+        }
+        catch(NullReferenceException nre)
+        {
+            throw nre;
+        }
+        catch(ArgumentException ae)
+        {
+            throw ae;
         }
         catch (Exception ex)
         {
