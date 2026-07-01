@@ -1,5 +1,7 @@
 using AppFinancialControl.Models;
 using AppFinancialControl.Service;
+using CommunityToolkit.Mvvm.Messaging;
+using LiveChartsCore;
 using System.Collections.ObjectModel;
 
 namespace AppFinancialControl.View;
@@ -10,10 +12,13 @@ public partial class Home : ContentPage
     public Home(ITransactionService service)
     {
         _servie = service;
-		InitializeComponent();
+        InitializeComponent();
         UpdateData();
-        charts.Series = Summary.GetSeries();
-	}
+        WeakReferenceMessenger.Default.Register<String>(this, (e, message) =>
+        {
+            UpdateData();
+        });
+    }
 
     #region UpdateData
     /// <summary>
@@ -25,20 +30,25 @@ public partial class Home : ContentPage
         {
             ObservableCollection<Transaction> transactions = _servie.GetAll(UserSession.Id)
                 ?? throw new NullReferenceException("Nenhuma transação encontrada");
+
             Double.TryParse(transactions.Where(t => t.Type == TransactionType.Income).Sum(t => t.Value).ToString(), out double income);
             Double.TryParse(transactions.Where(t => t.Type == TransactionType.Expenses).Sum(t => t.Value).ToString(), out double expenses);
-            
+
             double balance = income - expenses;
 
-            lblExpenses.Text += $"\n{expenses.ToString("C")}";
-            lblInconse.Text += $"\n{income.ToString("C")}";
-            lblBalance.Text += $"\n{balance.ToString("C")}";
+            lblExpenses.Text = $"\n{expenses.ToString("C")}";
+            lblInconse.Text = $"\n{income.ToString("C")}";
+            lblBalance.Text = $"\n{balance.ToString("C")}";
 
-            sylblExpenses.Text += $"\n{expenses.ToString("C")}";
-            sylblInconse.Text += $"\n{income.ToString("C")}";
-            sylblBalance.Text += $"\n{balance.ToString("C")}";
+            sylblExpenses.Text = $"{expenses.ToString("C")}";
+            sylblInconse.Text = $"{income.ToString("C")}";
+            sylblBalance.Text = $"{balance.ToString("C")}";
+
+            Summary summary = new Summary(_servie);
+            charts.Series = Array.Empty<ISeries>();
+            charts.Series = summary.Series;
         }
-        catch(NullReferenceException nre)
+        catch (NullReferenceException nre)
         {
             DisplayAlert("Erro", nre.Message, "Fechar");
         }
@@ -71,7 +81,7 @@ public partial class Home : ContentPage
     {
         try
         {
-            GoalsAdd screen = this.Handler.MauiContext.Services.GetService<GoalsAdd>() 
+            GoalsAdd screen = this.Handler.MauiContext.Services.GetService<GoalsAdd>()
                 ?? throw new ArgumentNullException("Context Maui Is null");
         }
         catch (Exception ex)
