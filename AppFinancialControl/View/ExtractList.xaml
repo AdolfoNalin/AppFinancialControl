@@ -14,8 +14,9 @@
     </ContentPage.Resources>
 
     <Grid
-        RowDefinitions="Auto,Auto,*, 150">
+        RowDefinitions="Auto,Auto,*, 180">
         <Border
+            Grid.Row="0"
             HorizontalOptions="FillAndExpand"
             Margin="10"
             Padding="10"
@@ -39,13 +40,32 @@
                 Padding="10"
                 Margin="5">
 
-                <DatePicker
-                Grid.Column="1"
-                HorizontalOptions="End"/>
+                <CarouselView
+                    x:Name="cvMonths"
+                    PositionChanged="UpdateDataDate">
+
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+
+                            <VerticalStackLayout>
+
+                                <Label
+                                    Text="{Binding Title}"
+                                    HorizontalOptions="Center"
+                                    FontSize="20"/>
+
+                            </VerticalStackLayout>
+
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+
+                </CarouselView>
             </Border>
         </Grid>
 
-        <ScrollView>
+
+            <ScrollView
+                Grid.Row="2">
             <CollectionView
                     x:Name="cvExtract">
                 <CollectionView.ItemTemplate>
@@ -54,19 +74,41 @@
                             Padding="10"
                             Margin="10"
                             ColumnDefinitions="50,*,Auto"
-                            RowDefinitions="2">
+                            RowDefinitions="Auto">
 
-                            <Label
-                                Text="{Binding Title, Converter={StaticResource TransactionNameConverter}}"
-                                Margin="10"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"
-                                FontSize="15"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    CommandParameter="{Binding .}"
+                                    >
+                                    
+                                </TapGestureRecognizer>
+                            </Grid.GestureRecognizers>
+                            
+                            <Border
+                                 WidthRequest="40"
+                                 HeightRequest="40"
+                                 StrokeShape="RoundRectangle 20"
+                                Grid.Column="0">
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        CommandParameter="{Binding .}">
+                                        
+                                    </TapGestureRecognizer>
+                                </Border.GestureRecognizers>
+                                
+                                <Label
+                                     Text="{Binding Name, Converter={StaticResource TransactionNameConverter}}"
+                                     Margin="10"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     FontSize="15"/>
+
+                            </Border>
+
                             <VerticalStackLayout Grid.Column="1">
                                 <Label
-                                    Text="{Binding Title}"/>
-                                <Label
-                                    Text="{Binding Description}"/>
+                                    Text="{Binding Name}"/>
                                 <Label
                                     Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
                             </VerticalStackLayout>
