@@ -44,12 +44,12 @@ namespace AppFinancialControl.Service
         #endregion
 
         #region GetDate
-        public ObservableCollection<Transaction> GetDate(Guid userId, DateOnly startDate, DateOnly endDate)
+        public ObservableCollection<Transaction> GetDate(Guid userId, MonthItem value)
         {
             try
             {
                 List<Transaction> listTransation = _db.GetCollection<Transaction>(_collectionName).Query().Where(t => t.UserId == userId)
-                    .Where(i => i.Date == startDate && i.Date == endDate).ToList()
+                    .Where(i => i.Date.Month == value.Month && i.Date.Year == value.Year).ToList()
                     ?? throw new ArgumentNullException("Nenhuma transação encontrada");
 
                 ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AppFinancialControl.Models;
 using System.Collections.ObjectModel;
-using System.Dynamic;
-using System.Text;
-using AppFinancialControl.Models;
 
 namespace AppFinancialControl.Service
 {
     public interface ITransactionService
     {
         public ObservableCollection<Transaction> GetAll(Guid id);
-        public ObservableCollection<Transaction> GetDate(Guid userId, DateOnly startDate, DateOnly endDate);
+        public ObservableCollection<Transaction> GetDate(Guid userId, MonthItem value);
         public void Add(Transaction transaction);
         public void Update(Transaction transaction);
         public void Delete(Transaction transaction);
