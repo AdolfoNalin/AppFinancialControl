@@ -57,7 +57,10 @@ public partial class Login : ContentPage
         {
             DisplayAlert("Erro",ane.ParamName, "Fechar");
         }
-
+        catch(ArgumentException ae)
+        {
+            DisplayAlert("Erro", ae.ParamName, "Fechar");
+        }
         catch (Exception ex)
         {
             throw ex;
