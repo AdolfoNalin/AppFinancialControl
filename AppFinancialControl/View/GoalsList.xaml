@@ -69,7 +69,7 @@
                                         VerticalOptions="Center"
                                         FontSize="15"
                                         TextColor="White"
-                                        Text="{Binding Titel, Converter= {StaticResource GoalsNameConverter}}"/>
+                                        Text="{Binding Title, Converter= {StaticResource GoalsNameConverter}}"/>
 
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer
