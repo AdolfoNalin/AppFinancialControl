@@ -10,12 +10,17 @@ public partial class TransactionEdit : ContentPage
 {
     private Transaction _transaction;
     private ITransactionService _service;
-	public TransactionEdit(ITransactionService service)
-	{
-		InitializeComponent();
+    public TransactionEdit(ITransactionService service)
+    {
+        InitializeComponent();
         _service = service;
-	}
+    }
 
+    #region SetTransactionToEdit
+    /// <summary>
+    /// method responsable for set the entry for screen
+    /// </summary>
+    /// <param name="transaction"></param>
     public void SetTransactionToEdit(Transaction transaction)
     {
         try
@@ -40,6 +45,7 @@ public partial class TransactionEdit : ContentPage
             DisplayAlert("Erro", $"{ex.Message}, {ex.StackTrace}, {ex.HelpLink}", "Ok");
         }
     }
+    #endregion
 
     #region TapGestureRecognizer_Tapped
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
@@ -56,6 +62,12 @@ public partial class TransactionEdit : ContentPage
     #endregion
 
     #region SaveEdit
+    /// <summary>
+    /// Event responsable for edit the transaction
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// <exception cref="NullReferenceException"></exception>
     private void SaveEdit(object sender, EventArgs e)
     {
         try

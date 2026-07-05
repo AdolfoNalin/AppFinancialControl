@@ -20,7 +20,7 @@ public partial class TransactionAdd : ContentPage
     {
         try
         {
-            await Navigation.PopAsync();
+            await Navigation.PopModalAsync();
         }
         catch (Exception ex)
         {
